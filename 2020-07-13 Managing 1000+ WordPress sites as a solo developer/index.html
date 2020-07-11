@@ -1,0 +1,178 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Managing 1000+ WordPress Sites as a Solo Developer</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/styles/github.min.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+		<style>
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				text-transform: inherit;
+				font-family: 'Montserrat', Helvetica Neue, sans-serif;
+			}
+			.reveal section img {
+				border:0px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="slides">
+					<section>
+						<h2>Managing 1000+ WordPress Sites as a Solo Developer 💻</h2>
+						<p>
+							<small>by <a href="http://austinginder.com">Austin Ginder</a> / <a href="http://twitter.com/austinginder">@austinginder</a></small>
+						</p>
+					</section>
+					<section>
+						<h3>My Tech Stack</h3>
+						<p><a href="https://anchor.host/make-reselling-wordpress-hosting-awesome/">Make Reselling WordPress Hosting Awesome 🌟</a></p>
+						<ul>
+							<li>Hosting - Kinsta</li>
+							<li>Domains - Hover</li>
+							<li>DNS - Constellix</li>
+							<li>WordPress Management Console - CaptainCore</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Healthy WordPress<br /> is the goal 👍👌</h2>
+						<img src="img/undraw_wordpress_utxt.png">
+					</section>
+					<section>
+						<h2>What I do</h2>
+						<ul>
+							<li>Backups and Restore</li>
+							<li>Managed Hosting</li>
+							<li>Managed DNS</li>
+							<li>Routine Maintenance</li>
+							<li>Site Migrations</li>
+							<li>Theme or plugin fixes/workarounds</li>
+						</ul>
+					</section>
+					<section>
+						<h2>What I don't do</h2>
+						<ul>
+							<li>Content updates</li>
+							<li>Web design or development work</li>
+						</ul>
+					</section>
+					<section>
+						<section>
+							<h3>Top #3 ways I stay sane.</h3>
+						</section>
+					</section>
+					<section>
+						<section>
+							<h3><small>#1</small><br />Routine Maintenance</h3>
+						</section>
+						<section>
+							<h2>Recommendations</h2>
+							<ul>
+								<li>Don't do manual updates, automate! 🤖</li>
+								<li>Pick a time and schedule them. 🕘</li>
+							</ul>
+						</section>
+						<section>
+							<h2>Crontab scheduled tasks</h2><br />
+							Production sites updated every Wednesday at 9:15am.
+							<pre><code class="sh">15 09 * * 3 captaincore update @production.updates-on --fleet</code></pre><br />
+							Staging sites updated every quarter at 12:15am.
+							<pre><code class="sh">15 0 1 */3 * captaincore update @staging.updates-on --fleet</code></pre>
+						</section>
+					</section>
+					<section>
+						<section>
+							<h3><small>#2</small><br />Full Visiblity with Quicksaves</h3>
+						</section>
+						<section>
+							<h3>Quicksaves are like lightweight snapshots</h3>
+							<ul>
+								<li>Automatic nightly SFTP sync and git repository check in (themes and plugins only)</li>
+								<li>If no changes, then no new commit.</li>
+								<li>Can be used to roll back any theme/plugin to a previous version</li>
+								<li>Not a replacement for backups however solves "What changed and when?"</li>
+							</ul>
+						</section>
+						<section>
+							<img src="img/Screen Shot 2020-03-09 at 10.20.59.png">
+						</section>
+						<section>
+							<img src="img/Screen Shot 2020-03-09 at 10.21.19.png">
+						</section>
+						<section>
+							<img src="img/Screen Shot 2020-03-09 at 10.21.51.png">
+						</section>
+						<section>
+							<img src="img/Screen Shot 2020-03-09 at 10.22.01.png">
+						</section>
+						<section>
+							<p>Taken from my WordPress management toolkit is open source and currently ⚠️ alpha development stage.</p>
+							CaptainCore <a href="https://captaincore.io/">🔗 captaincore.io</a></p>
+						</section>
+					</section>
+					<section>
+						<section>
+							<h3><small>#3</small><br />Smart Monitoring</h3>
+						</section>
+						<section>
+							<img src="img/Screen-Shot-2020-06-26-at-03.26.52-AM.png">
+						</section>
+						<section>
+							<h3>Check for errors after updates</h3>
+							<ul>
+								<li>Use a site monitor</li>
+								<li>WordPress 5.2 includes recovery mode. Define <code class="php">RECOVERY_MODE_EMAIL</code> within wp-config.php</li>
+							</ul>
+							<pre><code class="php">define( 'RECOVERY_MODE_EMAIL', 'email@domain.tld' );</code></pre>
+						</section>
+					</section>
+					<section>
+						<h3>Takeaways</h3>
+						<ul>
+							<li>Work with theme and plugin developers to resolves issues.</li>
+							<li>Spend some time building solutions while providing technical support.</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Questions?</h2>
+					</section>
+				</div>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				hash: true,
+				transition: 'convex', // none/fade/slide/convex/concave/zoom
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/highlight/highlight.js' },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>

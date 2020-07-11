@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Keeping your WordPress site secure</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+		<style>
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				text-transform: inherit;
+			}
+			.reveal section img {
+				border:0px;
+			}
+			.reveal ol, .reveal dl, .reveal ul {
+				margin: 0px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>WordPress Lancaster Meetup</h2>
+					<h4>Wifi: CFGuest</br>
+						CoworkingLov3
+					</h4>
+				</section>
+
+				<section>
+					<h1>Keeping Your WordPress Site Secure</h1>
+					<h2><strong>The Basics</strong></h2>
+				</section>
+
+				<section>
+					<h2>Is WordPress secure?</h2>
+					<p>Let's look at some data.</p>
+				</section>
+	
+
+				<section>
+					<p>Based on survey from Wordfence</p>
+					<img src="img/hacked_website_how_compromised.png">
+				</section>
+
+				<section>
+					<h4></h4>
+					<p>Sucuri’s 2016 report, just 3 plugins accounted for over 15% of the hacked websites they looked at.</p>
+					<img src="img/wordpress-plugins-hacked.png">
+				</section>
+
+				<section>
+					<p>If most websites are hacked through a plugin exploit
+						and most plugin vulternabilites have been patched
+						then keeping your site secured is your responsible.
+					</p>
+				</section>
+
+				<section>
+					<h3>Recommendation #1<br />Update themes/plugins and core</h3>
+					<ul>
+						<li>Make a plan for updates</li>
+						<li>Don't forget paid themes/plugins</li>
+						<li>Not comfortable? .. then hire someone</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Recommendation #2<br /> Use better passwords</h3>
+					<ul>
+						<li>Use a password management system</li>
+						<li>Use unique passwords per website</li>
+						<li>Don't use "admin"</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Recommendation #3<br /> Use a good web host</h3>
+					<ul>
+						<li>Avoid spillover effects</li>
+						<li>Up to date web server software</li>
+						<li>Story about WP Engine (Christmas 2015)</li>
+					</ul>
+				</section>
+
+			<section>
+				<h3>Discussion Time</h3>
+			</section>
+
+			<section>
+				<h3></h3>
+			</section>
+
+
+
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				],
+				controls: true,
+				history: true,
+				fragments: true,
+				fragmentInURL: true
+			});
+		</script>
+	</body>
+</html>

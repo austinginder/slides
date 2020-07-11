@@ -1,0 +1,216 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Upgrading to WordPress 5.0</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+		<style>
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				text-transform: inherit;
+			}
+			.reveal section img {
+				border:0px;
+			}
+			.reveal ol, .reveal dl, .reveal ul {
+				margin: 0px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+						<h2>WordPress Lancaster Meetup</h2>
+						<h4>Wifi: CFGuest</br>
+							 CoworkingLov3
+						</h4>
+				</section>
+				<section>
+					<h1>Upgrading to WordPress 5.0</h1>
+					<h4>By: Austin Ginder</h4>
+				</section>
+
+				<section>
+					<section>
+					<h3>WordPress 5.0 - What's included</h3>
+					<ol>
+						<li>New default theme called TwentyNineteen</li>
+						<li>New WordPress editor codenamed Gutenburg</li>
+					</ol>
+				</section>
+
+				<section>
+					<h4>Twenty Nineteen Theme - Homepage Example</h4>
+					<small>Reference: <a href="https://make.wordpress.org/core/2018/10/16/introducing-twenty-nineteen/">https://make.wordpress.org/core/2018/10/16/introducing-twenty-nineteen/</a></small>
+					<a href="img/Business-In-Device.jpg"><img src="img/Business-In-Device.jpg"></a>
+				</section>
+
+				<section>
+					<h4>Twenty Nineteen Theme - Blog Post Example</h4>
+					<small>Reference: <a href="https://make.wordpress.org/core/2018/10/16/introducing-twenty-nineteen/">https://make.wordpress.org/core/2018/10/16/introducing-twenty-nineteen/</a></small>
+					<a href="img/Post-In-Device.jpg"><img src="img/Post-In-Device.jpg"></a>
+				</section>
+
+					<section>
+						<h3>TwentyNineteen theme</h3>
+						<video controls="controls" width="911" height="512"
+	       name="Video Name" src="https://cldup.com/dobDLUw9v1.mov"></video>
+						<small>Preview by Matias Ventura</small>
+					</section>
+					<section>
+						<h3>Classic Editor</h3>
+						<img src="img/Screen Shot 2018-11-13 at 11.07.29 AM.png">
+					</section>
+					<section>
+						<h3>Gutenburg Editor</h3>
+						<img src="img/Screen Shot 2018-11-13 at 11.08.29 AM.png">
+					</section>
+				</section>
+
+				<section>
+					<h2>Why WordPress 5.0 is different then previous updates</h2>
+					<ul>
+						<li>Development on the new editor has been in works since January last year. Previously major releases were every 4 months.</li>
+						<li>New editor has breaking changes</li>
+						<li>New editor requires some learning</li>
+					</ul>
+				</section>
+
+				<section>
+					<section>
+					<h3>Wait, WordPress includes a breaking changes? 😲<h3>
+						<p class="fragment">Well sorta... 🤔</p>
+						<p class="fragment">The new editor is optional. 😌</p>
+					</section>
+					<section>
+						<h4>"Try Gutenberg" Callout in WordPress 4.9.8<h4>
+						<img src="img/Screen-Shot-2018-08-02-at-11.42.39-am.png">
+					</section>
+					<section>
+						<h4>Classic Editor Plugin</h4>
+						<img src="img/Screen Shot 2018-11-13 at 11.47.37 AM.png">
+						<small>Officially supported until December 31, 2021</small>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h3>Upgrading to WordPress 5.0<br /> What you need to know.</h3>
+					</section>
+					<section>
+					<ul>
+						<li>Major update includes brand new WordPress editor</li>
+						<li class="fragment">Release date is targeted for November 27th with a fall back plan to January 22, 2019.</li>
+						<li class="fragment">Major versions do not automatically update unless your using a managed WordPress web host.</li>
+						<li class="fragment">Upgrading to WordPress 5.0 with outdated themes/plugins may have issues with the new editor.</li>
+						<li class="fragment">You can update to WordPress 5.0 with the new editor disabled using the “Classic Editor” plugin: <a href="https://wordpress.org/plugins/classic-editor/">https://wordpress.org/plugins/classic-editor/</a></li>
+					</ul>
+				</section>
+			</section>
+
+			<section>
+				<h4>Recommendations for today</h4>
+					<ol>
+						<li>Update all themes/plugins 👏</li>
+						<li>Install Classic or Gutenburg plugin 👌</li>
+					</ol>
+					<br /><br />
+					 <p class="fragment">No surprises with WordPress 5.0 upgrading 🏆</p>
+			</section>
+
+			<section>
+				<h3>Using the new Editor<br />What you need to know.</h3>
+
+				<ul>
+					<li class="fragment">Blocks will replace Shortcodes 🎉<win-emoji></li>
+					<li class="fragment">Better copy and paste support</li>
+					<li class="fragment">Extendable and better over time</li>
+					<li class="fragment">It's here for the longterm</li>
+				</ul>
+
+			</section>
+
+			<section>
+				<h3>Is the new Editor compatible with "insert-name" theme/plugin?</h3>
+				<ul>
+					<li class="fragment">WooCommere 3.5.1+ 👍</li>
+					<li class="fragment">Advanced Custom Fields 5.0+ 👍</li>
+					<li class="fragment">WPBakery Page Builder 5.5.1+ 👍</li>
+					<li class="fragment">Elementor 2.1.0+ 👍</li>
+					<li class="fragment">Slider Revolution 👎 <br /><small>Last Update June 20th 2018</small></li>
+				</ul>
+			</section>
+
+			<section>
+				<h2>Stats for 880 WordPress sites</h2>
+				<ul>
+					<li><strong style="font-size:1.25em;">140 sites</strong> - WooCommere 3.5.1+ 👍</li>
+					<li><strong style="font-size:1.25em;">407 sites</strong> - Advanced Custom Fields 5.0+ 👍</li>
+					<li><strong style="font-size:1.25em;">99 sites </strong>- WPBakery Page Builder 5.5.1+ 👍</li>
+					<li><strong style="font-size:1.25em;">23 sites </strong>- Elementor 2.1.0+ 👍</li>
+					<li><strong style="font-size:1.25em;">117 sites</strong> - Slider Revolution 👎</li>
+				</ul>
+			</section>
+
+			<section>
+				<h3>Gutenberg Compatible <br /><strong>≠</strong> <br />Gutenberg Optimized</h3>
+			</section>
+
+			<section>
+				<h3>Gutenberg Treats</h3>
+				<ul>
+					<li><a href="https://www.advancedcustomfields.com/blog/acf-5-8-introducing-acf-blocks-for-gutenberg/">ACF Blocks</a></li>
+					<li><a href="https://elementor.com/blog/blocks-for-gutenberg/">Elementor Blocks</a></li>
+					<li><a href="https://github.com/mkaz/code-syntax-block">Code Syntax Highlighting Block</a></li>
+					<li><a href="https://twitter.com/dmsnell23/status/1063126946350096389">Sketch-a-doodle</a></li>
+				</ul>
+			</section>
+			<section>
+				<h3>Demo Gutenberg</h3>
+			</section>
+
+			<section>
+				<h3>Questions?</h3>
+			</section>
+
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				],
+				controls: true,
+				history: true,
+				fragments: true,
+				fragmentInURL: true
+			});
+		</script>
+	</body>
+</html>

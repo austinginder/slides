@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Easily Avoidable Website Outages</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<style>
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				text-transform: inherit;
+			}
+			.reveal section img {
+				border:0px;
+			}
+			.reveal ol, .reveal dl, .reveal ul {
+				margin: 0px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>WordPress Lancaster Meetup</h2>
+					<h4>Wifi: CFGuest</br>
+						CoworkingLov3
+					</h4>
+				</section>
+				<section>
+					<h3>Easily Avoidable Website Outages</h3>
+				</section>
+				<section>
+					<section>
+							Why do websites go offline?
+					</section>
+					<section>
+						<img src="img/502-bad-gateway-error-chrome.png">
+					</section>
+					<section>
+						<ul>
+							<li>Coding errors</li>
+							<li>Server crashes</li>
+							<li>Service provider issues</li>
+							<li>Maintenance</li>
+							<li>Hackers</li>
+							<li>Traffic overload</li>
+							<li>Payment issues</li>
+							<li>Expired hosting or domain name</li>
+						</ul>
+					</section>
+					
+					<section>
+						<ul>
+							<li>No hosting is 100% uptime</li>
+							<li>Closer to 100% cost goes up exponentially</li>
+						</ul>
+					</section>
+					
+				</section>
+				<section>
+					<section>
+						How do you track outages?
+					</section>
+					<section>
+						<p>Uptime Monitors</p>
+						<ul>
+							<li><a href="https://jetpack.com/support/monitor/">Jetpack Monitor</a> - Free</li>
+							<li><a href="https://uptimerobot.com/">Uptime Robot</a> - Free & Paid</li>
+							<li><a href="https://www.pingdom.com/product/uptime-monitoring/">Pingdom</a> - Paid</li>
+							<li>Make your own</li>
+						</ul>
+					</section>
+				</section>
+				
+				<section>
+					<section>
+						<h3>1. Domain renewal issues</h3>
+					</section>
+					<section>
+						<h3>1. Domain renewal issues <br /><small>Easily avoidable</small></h3>
+						<ul>
+							<li>Manually renew domain 1 year prior to automatic renewal</li>
+							<li>Prepay credit with domain provider</li>
+						</ul>
+					</section>
+					<section>
+						<img src="img/Screen-Shot-2019-06-29-at-6.02.43-AM.png">
+					</section>
+				</section>
+				<section>
+					<section>
+						<h3>2. DNS outages</h3>
+					</section>
+					<section>
+						<h3>2. DNS outages <br /><small>Easily avoidable</small></h3>
+						<ul>
+							<li>Domain providers typically include free DNS. <br /><strong>Don't use them</strong>.</li>
+							<li>Pay for premium DNS.</li>
+						</ul>
+					</section>
+					<section>
+						<img src="img/Screen Shot 2019-08-15 at 5.40.25 PM.png">
+					</section>
+				</section>
+				<section>
+					<section>
+						<h3>3. Live code changes</h3>
+					</section>
+					<section>
+						<img src="img/Screen-Shot-2019-07-04-at-12.17.35-PM.png">
+					</section>
+					<section>
+						<h3>3. Live code changes <br /><small>Easily avoidable</small></h3>
+						<ul>
+							<li>Use local development sites.</li>
+							<li>Use staging sites.</li>
+						</ul>
+					</section>
+				</section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>
