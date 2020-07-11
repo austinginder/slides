@@ -1,0 +1,309 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Common WordPress Maintenance Woes</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/styles/github.min.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+		<style>
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				text-transform: inherit;
+				font-family: 'Montserrat', Helvetica Neue, sans-serif;
+			}
+			.reveal section img {
+				border:0px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<div class="slides">
+					<section>
+						<h2>Common WordPress Maintenance Woes 🌩️</h2>
+						<p>
+							<small>by <a href="http://austinginder.com">Austin Ginder</a> / <a href="http://twitter.com/austinginder">@austinginder</a></small>
+						</p>
+					</section>
+					<section>
+						<h2>Healthy WordPress<br /> is the goal 👍👌</h2>
+						<img src="img/undraw_wordpress_utxt.png">
+					</section>
+					<section>
+						<section>
+						<h2>Maintenance Strategies</h2>
+						<h4>Locked down 🔒 vs open 🔓</h4>
+						</section>
+						<section>
+							<h3>Locked down 🔒 options</h3>
+							<ul>
+								<li>Plugins/themes managed by developers via git.</li>
+								<li>Deploy to test, development and production environments.</li>
+							</ul>
+							<p>
+							Trellis <a href="https://roots.io/trellis/">🔗 roots.io/trellis</a>
+							<br />Pantheon <a href="https://pantheon.io/">🔗 pantheon.io</a></p>
+						</section>
+						<section>
+							<h3>Open 🔓 options</h3>
+							<ul>
+								<li>Plugins/themes open by everyone</li>
+								<li>Maintenance handled directly on production environment</li>
+							</ul>
+							<p>
+								ManageWP <a href="https://managewp.com/">🔗 managewp.com</a><br />
+								Bash scripts, WP-CLI and SSH</a>
+							</p>
+						</section>
+					</section>
+					<section>
+						<h2>Warning ⚠️</h2>
+						<p>No WordPress maintenance solution is perfect.</p>
+					</section>
+					<section>
+						<h2>Open strategies work for the average Joe ☕</h2>
+					</section>
+					<section>
+						<h3>Most WordPress sites<br /> run just fine if:</h3>
+						<ul>
+							<li>Regular backups</li>
+							<li>Regular WordPress security and plugin updates</li>
+							<li>Hosted with a reputable WordPress host provider</li>
+						</ul>
+					</section>
+					<section>
+						If you do get into trouble, then make friends ❤️<br /> with a WordPress Developer.
+						<img src="img/undraw_web_developer_p3e5.png">
+					</section>
+					<section>
+						<section>
+							<h3>Top 5 common WordPress maintenance woes and how to overcome them</h3>
+						</section>
+					</section>
+					<section>
+						<section>
+							<h3><small>#1</small><br />Infrequently updates.</h3>
+						</section>
+						<section>
+							<ul>
+								<li>Less secure</li>
+								<li>More chance of update issues</li>
+							</ul>
+						</section>
+						<section>
+							<h2>Recommendations</h2>
+							<ul>
+								<li>Don't do manual updates, automate! 🤖</li>
+								<li>Pick a time and schedule them. 🕘</li>
+							</ul>
+						</section>
+						<section>
+							Crontab scheduled at 9:15am on Wednesday.
+							<pre><code class="sh">15 09 * * 3 captaincore update @production.updates-on --fleet</code></pre>
+						</section>
+						<section>
+							<a href="https://crontab.guru/#15_09_*_*_3">
+								<img src="img/Screen Shot 2020-03-07 at 19.26.18.png">
+							</a>
+						</section>
+						<section>
+							Default to update everything. <br />
+							<pre><code class="sh"># update-everything.sh 
+wp plugin update --all
+wp theme update --all
+wp plugin update --all --skip-plugins --skip-themes
+wp theme update --all --skip-plugins --skip-themes
+wp core update
+wp core update-db
+wp core update-db --network</code></pre>
+Only exclude updates if necessary. More complex scripting required to handle per site configurations.
+						</section>
+						<section>
+							<h3>Bonus WP-CLI Tip</h3>
+							<pre><code class="sh">echo &#x22;&#x3C;?php define( &#x27;WP_ADMIN&#x27;, true ); ?&#x3E;&#x22; &#x3E; define-wp-admin.php
+wp theme update --all --require=&#x22;define-wp-admin.php&#x22;
+wp plugin update --all --require=&#x22;define-wp-admin.php&#x22;</code></pre>
+						</section>
+					</section>
+					<section>
+						<section>
+							<h3><small>#2</small><br />Theme and plugins without license keys.</h3>
+						</section>
+						<section>
+							<ul>
+								<li>Less secure</li>
+								<li>Required to receive updates</li>
+							</ul>
+						</section>
+						<section>
+							<h2>Recommendations</h2>
+							<ul>
+								<li>Every quarter hunt  &nbsp;👀&nbsp; for outdated themes/plugins and resolve the underlying issue.</li>
+								<li>Make a list 📝 of themes/plugins with known issues.</li>
+							</ul>
+						</section>
+						<section>
+							<h3>Manually override paid plugins with SSH</h3>
+							<ul>
+								<li>Upload zip of paid plugin to public location or generate one on the fly</li>
+								<li>On destination site run <pre><code class="sh">wp plugin install $plugin_url --force</code></pre></li>
+							</ul>
+							<p></p>
+						</section>
+						<section>
+							<h3>Generating plugin zip on the fly</h3>
+							
+							<pre><code class="sh"># plugins-zip.sh
+plugins=(plugin-slug-1 plugin-slug-2 plugin-slug-3)
+cd wp-content/plugins
+for plugin in ${plugins[@]}; do
+	zip -r ${plugin}.zip $plugin
+done</code></pre>
+Step #1: Run on source site which has plugins installed.
+							<pre><code class="sh">ssh user@source-address "bash -s" < plugins-zip.sh</code></pre>
+							Step #2: Deploy via WP-CLI + SSH to destination site
+							<pre><code class="sh">ssh user@destination-address "wp plugin install $plugin_url --force"</code></pre>
+
+						</section>
+					</section>
+					<section>
+						<section>
+							<h3><small>#3</small><br />Dialogs after updates.</h3>
+						</section>
+						<section>
+							<ul>
+								<li>Annoying popups</li>
+								<li>Required to fully finish updates</li>
+							</ul>
+						</section>
+						<section>
+							<h2>Recommendations</h2>
+							Solve with SSH/WP-CLI automation.
+<pre><code class="sh">wp wc update      # Runs WooCommerce database upgrades</code></pre>
+<pre><code class="sh">wp core update    # Updated WordPress core
+wp core update-db # Runs WordPress database upgrades</code></pre>
+						</section>
+					</section>
+					<section>
+						<section>
+							<h3><small>#4</small><br />Outdated PHP code.</h3>
+						</section>
+						<section>
+							New versions of PHP can cause PHP fatal errors
+						</section>
+						<section>
+							<h2>Recommendations</h2>
+							<ul>
+								<li>Use a web host that supports switching between PHP versions</li>
+								<li>Upgrade PHP on your schedule, before it's automatically updated</li>
+							</ul>
+						</section>
+						<section>
+							<h3>Tips to resolve<br/> outdated PHP code</h3>
+							<ul>
+								<li>Update all plugins and themes.</li>
+								<li>Use a web host which supports latest PHP.</li>
+								<li>Google error messages.</li>
+								<li>Get help. Consult with a PHP developer.</li>
+							</ul>
+						</section>
+					</section>
+					<section>
+						<section>
+							<h3><small>#5</small><br />Errors after WordPress updates.</h3>
+						</section>
+						<section>
+							<ul>
+								<li>Plugin conflicts.</li>
+								<li>Website behavior changes.</li>
+							</ul>
+						</section>
+						<section>
+							<h2>Recommendations</h2>
+							<ul>
+								<li>Check for errors after updates</li>
+								<li>Track file changes</li>
+							</ul>
+						</section>
+						<section>
+							<h3>Check for errors after updates</h3>
+							<ul>
+								<li>Use a site monitor</li>
+								<li>WordPress 5.2 includes recovery mode. Define <code class="php">RECOVERY_MODE_EMAIL</code> within wp-config.php</li>
+							</ul>
+							<pre><code class="php">define( 'RECOVERY_MODE_EMAIL', 'email@domain.tld' );</code></pre>
+						</section>
+						<section>
+							<h2>Track file changes with git</h2>
+							<ul>
+								<li>Automatic nightly SFTP sync and git repository check in (themes and plugins only)</li>
+								<li>If no changes, then no new commit.</li>
+								<li>Can be used to roll back any theme/plugin to a previous version</li>
+								<li>Not a replacement for backups however solves "What changed and when?"</li>
+							</ul>
+						</section>
+						<section>
+							<h2>Any git repo can be given an interface</h2>
+						</section>
+						<section>
+							<img src="img/Screen Shot 2020-03-09 at 10.20.59.png">
+						</section>
+						<section>
+							<img src="img/Screen Shot 2020-03-09 at 10.21.19.png">
+						</section>
+						<section>
+							<img src="img/Screen Shot 2020-03-09 at 10.21.51.png">
+						</section>
+						<section>
+							<img src="img/Screen Shot 2020-03-09 at 10.22.01.png">
+						</section>
+						<section>
+							<p>Taken from my WordPress management toolkit is open source and currently ⚠️ alpha development stage.</p>
+							CaptainCore <a href="https://captaincore.io/">🔗 captaincore.io</a></p>
+						</section>
+					</section>
+					<section>
+						<h2>Conclusion.</h2>
+					</section>
+					<section>
+						<h2>Questions?</h2>
+					</section>
+				</div>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				hash: true,
+				transition: 'convex', // none/fade/slide/convex/concave/zoom
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/highlight/highlight.js' },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>
