@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Optimizing WordPress for Google Core Web Vitals</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<style>
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				text-transform: initial;
+			}
+			.reveal blockquote {
+			    padding: 1% 6%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>Lancaster WordPress Community</h2>
+					<h4>
+						Wifi: CFGuest</br>
+						CoworkingLov3
+					</h4>
+				</section>
+				<section>
+					<h2>Optimizing WordPress for Google Core Web Vitals</h2>
+					<h4>By: Austin Ginder</h4>
+				</section>
+				<section data-markdown>
+					### What are Google's core web vitals?
+					![](img/core-vitals.png)
+					[🔗 web.dev/vitals/](https://web.dev/vitals/)
+				</section>
+				<section data-markdown>
+					### Why is everyone talking about core web vitals?
+					> "Google will be incorporating **Core Web Vitals into its ranking algorithms from May 2021**, meaning that your better-performing pages will get a ranking boost, while poorly-performing pages may see a drop in positions."
+
+					[🔗 kinsta.com/blog/wordpress-seo/](https://kinsta.com/blog/wordpress-seo/)
+				</section>
+				<section data-markdown>
+					### Core web vitals deal with how preformat your code is, not your server
+					> "To put it simply, while the amount of code will always matter for performance, you also now have to consider how your website loads the code."
+
+					[🔗 woorkup.com/speed-up-wordpress/](https://woorkup.com/speed-up-wordpress/)
+				</section>
+				<section data-markdown>
+					- **Largest Contentful Paint (LCP)**
+					measures loading performance. To provide a good user experience, LCP should occur within 2.5 seconds of when the page first starts loading.
+
+					- **First Input Delay (FID)** measures interactivity. To provide a good user experience, pages should have a FID of less than 100 milliseconds.
+
+					- **Cumulative Layout Shift (CLS)** measures visual stability. To provide a good user experience, pages should maintain a CLS of less than 0.1.
+				</section>
+				<section data-markdown>
+					### Where to start
+					- [PageSpeed Insights tool](https://developers.google.com/speed/pagespeed/insights/)
+					- [web.dev Measure tool](https://web.dev/measure/)
+					- [GTmetrix](https://gtmetrix.com/)
+				</section>
+				<section data-markdown>
+					### Pagespeed is not web host performance
+					- Fast web hosting will not solve pagespeed issues
+					- Same website, same web host can have vastly different scores with different themes and plugins.
+				</section>
+				<section data-markdown>
+					### How to improve?
+					- Existing themes: [WP Rocket](https://wp-rocket.me/), [Jetpack Image CDN](https://jetpack.com/support/site-accelerator/), [How to Speed Up Your WordPress Site (Ultimate 2021 Guide)](https://kinsta.com/learn/speed-up-wordpress/)
+					- Switch to a already preformat theme like [Blocksy](https://creativethemes.com/blocksy/).
+				</section>
+				<section data-markdown>
+					### Theme comparsion demo
+				</section>
+				
+
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
