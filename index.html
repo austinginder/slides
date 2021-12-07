@@ -7,9 +7,14 @@
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <style>
+      [v-cloak] > * {
+        display:none;
+      }
+    </style>
 </head>
 <body>
-  <div id="app">
+  <div id="app" v-cloak>
     <v-app>
       <v-main>
         <v-toolbar dark color="primary">
@@ -56,6 +61,7 @@
       vuetify: new Vuetify(),
       data: {
           items: [
+              { date: "October 19th, 2021", place: "Lancaster WordPress Community", title: "Building a Better WordPress Backup Tool", href: "2021-10-19 Building a Better WordPress Backup Tool/" },
               { date: "April 20th, 2021", place: "Lancaster WordPress Community", title: "Optimizing WordPress for Google Core Web Vitals", href: "2021-04-20 Optimizing WordPress for Google Core Web Vitals/" },
               { date: "July 13th, 2020", place: "Philly 'burbs WordPress Meetup", title: "Managing 1000+ WordPress Sites as a Solo Developer", href: "2020-07-13 Managing 1000+ WordPress Sites as a Solo Developer/" },
               { date: "March 14th, 2020", place: "WordCamp Lancaster 2020 (cancelled)", title: "Common WordPress Maintenance Woes", href: "2020-03-14 Common WordPress Maintenance Woes/" },
