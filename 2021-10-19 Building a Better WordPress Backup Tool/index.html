@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Building a Better WordPress Backup Tool</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<style>
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				text-transform: initial;
+			}
+			.reveal blockquote {
+			    padding: 1% 6%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>Lancaster WordPress Community</h2>
+					<h4>
+						Wifi: CFGuest</br>
+						CoworkingLov3
+					</h4>
+				</section>
+				<section>
+					<h2>Building a Better WordPress Backup Tool 💽</h2>
+					<h4>By: Austin Ginder</h4>
+				</section>
+				<section>
+					<section data-markdown>
+					### Moving a WordPress site is simple, right?
+					</section>
+					<section data-markdown>
+						With good web hosts, yes.
+					</section>
+					<section data-markdown>
+						For bad web hosts, use whatever works.
+						- [BackupBuddy](https://ithemes.com/backupbuddy/)
+						- [ManageWP](https://managewp.com/)
+						- [Partial backups mixed with scripts](https://anchor.host/migrating-a-wordpress-site-when-all-options-fail/)
+					</section>
+				</section>
+				<section data-markdown>
+					### Why build a WordPress backup tool?
+					- Open source
+					- Control and ownership
+					- Simple backup tool, not management
+					- Attract WordPress developers to Anchor Hosting
+					- Money 💰
+				</section>
+				<section data-markdown>
+					### My Backup tool wishlist
+					- Type in WordPress credentials and press a button OR install a connector WordPress plugin, like ManageWP's worker plugin.
+					- Open source with paid hosted version
+					- Realtime feedback
+					- Full site backup, both database and files, as a downloadable zip
+					- Super simple, no accounts required
+				</section>
+				<section data-markdown>
+					### Progress...OR how I might handle
+					✅ Login and plugin install with [Chrome PHP](https://anchor.host/automating-wordpress-backends-with-chrome-and-php/)
+
+					✅ Realtime with [web sockets](https://captaincore.io/development-update/captaincore-update-11-realtime-websockets-%F0%9F%94%8C/)
+
+					✅ Fetch public files with [Rclone and scripting](https://anchor.host/migrating-a-wordpress-site-when-all-options-fail/)
+
+					✅ Fetch private files with PHP zip + WP REST API
+					
+					✅ [New domain](https://disembark.host/) and tagline, for ease of use
+
+					🤷‍♂️ No accounts, maybe tie ownership to web access 
+				</section>
+				<section data-markdown>
+					### Code Preview
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
