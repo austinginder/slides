@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Using Github To Self-Host Updates For WordPress Plugins</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<style>
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				text-transform: initial;
+			}
+			.reveal blockquote {
+			    padding: 1% 6%;
+			}
+			.small {
+				font-size: 2em;;
+			}
+			.reveal code {
+				background: #888;
+				font-size: 0.65em;
+				padding: 0.1em 0.25em;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>WordPress Lancaster</h2>
+					<h4>
+						Wifi: CFGuest</br>
+						CoworkingLov3
+					</h4>
+				</section>
+				<section>
+					<section>
+						<h2>Using Github To Self-Host Updates For WordPress Plugins</h2>
+						<p>&nbsp;</p>
+						<p style="font-size: 0.5em;">by Austin Ginder</p>
+					</section>			
+				</section>
+				<section>
+					<section>
+						<h2>Build a WordPress plugin</h2>
+						Now what?
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Distributing Plugin Updates</h2>
+						<ul>
+							<li>WordPress.org</li>
+							<li>Easy Digital Downloads</li>
+							<li>On your own</li>
+						</ul>
+					</section>			
+				</section>
+				<section>
+					<img src="img/wp-freighter-homepage.png">
+				</section>
+				<section data-markdown>
+					### Advantages: on your own
+					- Full control over support
+					- No SVN, development using Git or however you'd like
+					- No limitations on trademarks or coding standards
+					- Hidden by default
+					- No need for readme.txt
+				</section>
+				<section data-markdown>
+					### Disadvantages: on your own
+					- Not as trusted to the average user
+					- Lack of discoverablity
+					- No safeguards
+				</section>
+				<section>
+					<section data-markdown>
+					### Our your own is easy then you think
+					Here's what you need:
+					
+					- A plugin manifest file `plugin.json`
+					- Two filter hooks `plugins_api` and `site_transient_update_plugins` and some update logic.
+					- Packaged zip of your plugin, uploaded anywhere
+					</section>
+					<section>
+						No PHP library is required
+					</section>
+					<section data-markdown>
+						Fantastic blog post by Misha Rudrastyh: 
+						[How to Configure Self-Hosted Updates for Your Private Plugins](https://rudrastyh.com/wordpress/self-hosted-plugin-update.html)
+					</section>
+				</section>
+				<section>
+					<section data-markdown>
+						### The Plugin Manifest 
+
+						![](img/wp-freighter-manifest.png)
+						https://wpfreighter.com/plugin-wpfreighter.json
+					</section>
+					<section data-markdown>
+						### Plugin updates
+
+						![](img/wp-freighter-update.png)
+					</section>
+				</section>
+				<section>
+					<section data-markdown>
+						### Managing updates with Github
+						![](img/github-release.png)
+					</section>
+					<section data-markdown>
+						### Grabbing latest download link
+						![](img/github-release-direct-download.png)
+					</section>
+				</section>
+				<section data-markdown>
+					### The Updater Logic
+	
+					https://anchor.host/using-github-to-self-host-updates-for-wordpress-plugins/
+
+					Full code on blog post
+				</section>
+				<section>
+					Providing versioned updates is beneficial for anyone making custom themes and plugins
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
