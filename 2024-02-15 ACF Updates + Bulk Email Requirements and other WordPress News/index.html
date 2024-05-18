@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>ACF Updates</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<style>
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				text-transform: initial;
+			}
+			.reveal blockquote {
+			    padding: 1% 6%;
+			}
+			.small {
+				font-size: 2em;;
+			}
+			.reveal code {
+				background: #888;
+				font-size: 0.65em;
+				padding: 0.1em 0.25em;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>WordPress Lancaster</h2>
+					<h4>
+						Wifi: CFGuest</br>
+						CoworkingLov3
+					</h4>
+				</section>
+				<section>
+					<section>
+						<h2>ACF Updates</h2>
+						<p>&nbsp;</p>
+						<p style="font-size: 0.5em;">by Austin Ginder</p>
+					</section>			
+				</section>
+				<section>
+					<section>
+						<h2>What is ACF and why should I care?</h2>
+					</section>
+					<section>
+						<h2><a href="https://www.advancedcustomfields.com">Advanced Custom Fields</a></h2>
+						<ul>
+							<li>Hugely popular free & paid plugin</li>
+							<li>Provides UI for custom fields</li>
+							<li>Used on 40% of Anchor Hosting customers</li>
+							<li>Active development by WP Engine team</li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>ACF v6.2.5</h2>
+						<p>Now includes a new security warning</p>
+						<img src="img/acf-warning.webp">
+						<p><small>* Was included in last month's release</small></p>
+					</section>
+					<section>
+						<img src="img/acf-warnings-full.webp">
+					</section>
+					<section>
+						<h2>What happens if I ignore the warning?</h2>
+						<p>Most likely everything will be fine. Worse case parts of your front-end where ACF is used might break.</p>
+					</section>
+					<section data-markdown>
+						### So what really is changing?
+						In ACF 6.2.7, expected later this month, functions `the_field()` and `the_sub_field()` with strip unsafe HTML.
+
+						Similar to the WordPress editor, tags like `&lt;script&gt;` tags, or `&lt;iframe&gt;` will be stripped from being displayed.
+					</section>
+					<section data-markdown>
+						### Many warnings are safe
+						For example `&` will become `&amp;amp;`
+					</section>
+					<section data-markdown>
+						### If you do need to support `&lt;script&gt;` or `&lt;iframe&gt;` from ACF fields then
+						Change `the_field()` to `echo get_field()` or `the_sub_field()` to `echo get_sub_field()`
+					</section>
+					<section data-markdown>
+						### Work with ACF security not against 
+						- Do not blindly turn off security by changing all `the_field()` references
+						- Try out new behavior early and fix just what's needed with the following filter
+						
+						`add_filter( &#39;acf/the_field/escape_html_optin&#39;, &#39;__return_true&#39; );`
+					</section>
+					
+				</section>
+				<section>
+					<section>
+						<h2>Google & Yahoo Bulk Email Changes</h2>
+						As of the beginning of this month
+					</section>
+					<section data-markdown>
+						### Will this affect my WordPress website?
+						Probably not
+					</section>
+					<section data-markdown>
+						Google defines bulk senders as anyone who send more than 5,000 messages to Gmail addresses in one day
+						[Read Google Blog post here](https://blog.google/products/gmail/gmail-security-authentication-spam-protection/)
+					</section>
+					<section data-markdown>
+						### Who does it affect?
+						Services like Mailchimp, Constant Contact and ActiveCampaign
+					</section>
+					<section data-markdown>
+						### The solution requires new DNS records
+					</section>
+					<section data-markdown>
+						### Mailchimp required DNS records
+						##### CNAME Record
+						Name `k2._domainkey`
+						Value `dkim2.mcsv.net`
+
+						##### CNAME Record
+						Name `k3._domainkey`
+						Value `dkim3.mcsv.net`
+
+						##### TXT record
+						Name `_dmarc`
+						Value `v=DMARC1; p=none;`
+					</section>
+					<section data-markdown>
+						### Constant Contact required DNS records
+						##### CNAME Record
+						Name `ctct1._domainkey`
+						Value `100._domainkey.dkim1.ccsend.com`
+
+						##### CNAME Record
+						Name `ctct2._domainkey`
+						Value `200._domainkey.dkim2.ccsend.com`
+
+						##### TXT record
+						Name `_dmarc`
+						Value `v=DMARC1; p=none;`
+					</section>
+					<section data-markdown>
+						### Never hurts to be proactive
+					</section>
+					<section data-markdown>
+						- [Do I have an SPF record](https://mxtoolbox.com/SuperTool.aspx?action=spf%3aanchor.host&run=toolpage)?
+						- [Do I have a DMARC record](https://mxtoolbox.com/SuperTool.aspx?action=dmarc%3aanchor.host&run=toolpage)?
+						- [Do I have a DKIM enabled](https://support.google.com/a/answer/180504?hl=en)?
+					</section>
+				</section>
+				<section>
+					Other News
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>

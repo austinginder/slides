@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Extending Plugin Checksums</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<style>
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				text-transform: initial;
+			}
+			.reveal blockquote {
+			    padding: 1% 6%;
+			}
+			.small {
+				font-size: 2em;;
+			}
+			.reveal code {
+				background: #888;
+				font-size: 0.65em;
+				padding: 0.1em 0.25em;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>WordPress Lancaster</h2>
+					<h4>
+						Wifi: CFGuest</br>
+						CoworkingLov3
+					</h4>
+				</section>
+				<section>
+					<section>
+						<h2>Extending Plugin Checksums</h2>
+						<p>&nbsp;</p>
+						<p style="font-size: 0.5em;">by Austin Ginder</p>
+					</section>			
+				</section>
+				<section>
+					<section data-markdown>
+						<h2>What are checksums?</h2>
+						- A checksum is a string of numbers and letters that acts as a fingerprint for a file.
+						- A way to verify files haven't been tampered with.
+					</section>
+					<section>
+						<img src="img/file-checksums.webp">
+					</section>
+				</section>
+				<section>
+					<section data-markdown>
+						<h2>Verifying checksums with WP CLI</h2>
+
+						`wp core verify-checksums`
+						
+						`wp plugin verify-checksums --all`
+					</section>
+				</section>
+				<section>
+					<section data-markdown>
+						<h3>Only WordPress.org plugins are verified</h3>
+						
+						[Example of WooCommerce v8.6.0 checksums](https://downloads.wordpress.org/plugin-checksums/woocommerce/8.6.0.json)
+					</section>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>

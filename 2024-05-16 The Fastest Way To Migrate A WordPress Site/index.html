@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>The Fastest Way To Migrate A WordPress Site</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<style>
+			:root {
+				--r-background-color: #ffffff;
+				--r-heading-color: #59595b;
+				--r-main-color: #59595b;
+				--r-link-color-hover: #27c3f3;
+			}
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				text-transform: initial;
+			}
+			.reveal blockquote {
+			    padding: 1% 6%;
+			}
+			.small {
+				font-size: 2em;;
+			}
+			.reveal code {
+				background: #ddd;
+				font-size: 0.65em;
+				padding: 0.1em 0.25em;
+			}
+			.reveal pre code {
+				padding: 18px;
+    			background: #1e1e3f;
+				/*font-size: 1em; */
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>WordPress Lancaster</h2>
+					<h4>
+						Wifi: CFGuest</br>
+						CoworkingLov3
+					</h4>
+				</section>
+				<section>
+					<section>
+						<h2>The Fastest Way To Migrate A WordPress Site</h2>
+						<h1><span class="mdi mdi-lightning-bolt" style="color:yellow;-webkit-text-stroke-width: 2px;-webkit-text-stroke-color: #59595b;"></span></h1>
+						<p style="font-size: 0.5em;">by Austin Ginder</p>
+					</section>			
+				</section>
+				<section>
+					<section>
+						<table style="min-width:900px;text-wrap: nowrap;text-align:center;">
+							<tr>
+								<td style="text-align:center;border-bottom: none;"><h1><span class="mdi mdi-server"></span></h1></td>
+								<td style="text-align:center;border-bottom: none;"><span class="mdi mdi-redo"></span></td>
+								<td style="text-align:center;border-bottom: none;"><h1><span class="mdi mdi-wordpress"></span></h1></td>
+								<td style="text-align:center;border-bottom: none;"><span class="mdi mdi-redo"></span></td>
+								<td style="text-align:center;border-bottom: none;"><h1><span class="mdi mdi-server"></span></h1></td>
+							</tr>
+							<tr>
+								<td style="text-align:center;border-bottom: none;">Server #1</td>
+								<td></td>
+								<td style="text-align:center;border-bottom: none;">WordPress Site</td>
+								<td></td>
+								<td style="text-align:center;border-bottom: none;">Server #2</td>
+							</tr>
+						</table>
+					</section>
+					<section>
+						Fastest way to move a WordPress site is with...
+						<h1><strong>SSH</strong></h1>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h1>SSH</h1>
+						<ul>
+							<li>crazy powerful</li>
+							<li>extremely fast</li>
+							<li><span class="fragment strike" data-fragment-index="1">can be scary</span></li>
+						</ul>
+						<p class="fragment" data-fragment-index="1"><span class="mdi mdi-information-box highlight-blue"></span><strong>So let's fix that!</strong></p>
+					</section>
+					<section>
+						Connect to WordPress over SSH
+						<img src="img/ssh-connect.webp">
+						<p>You'll need a terminal, recommend <a href="https://www.warp.dev/"><strong>Warp</strong></a> <span class="mdi mdi-apple"></span> <span class="mdi mdi-linux"></span> <br /> or <a href="https://hyper.is/"><strong>Hyper.is</strong></a> <span class="mdi mdi-apple"></span> <span class="mdi mdi-linux"></span> <span class="mdi mdi-microsoft-windows"></span></p>
+						<small>Or use the built in terminal</small>
+					</section>
+					<section>
+						Run some commands like <code>wp option get home</code>
+						<img src="img/ssh-connected.webp">
+					</section>
+					<section>
+						Type <code>exit</code> to close SSH connection
+						<img src="img/ssh-exit.webp">
+						<small>Easy, just three steps. Want to see it again?</small>
+					</section>
+					<section>
+						Step #1: Connect to SSH
+						<img src="img/ssh-connect.webp">
+					</section>
+					<section>
+						Step #2: Run some commands
+						<img src="img/ssh-connected.webp">
+					</section>
+					<section>
+						Step #3: Exit when done
+						<img src="img/ssh-exit.webp">
+					</section>
+				</section>
+				<section>
+					<section data-markdown>
+						### Everyone can learn to run a bash script
+						Being a developer is not a requirement
+					</section>
+					<section data-markdown>
+						The following one liner will run a bash script located: https://run.captaincore.io/migrate on whichever computer or server your working on.
+						```
+						curl https://run.captaincore.io/migrate | bash -s -- --url="$url" --update-urls
+						```
+					</section>
+					<section data-markdown>
+						The `--url` argument needs to be set to a valid WordPress backup.
+						```
+						curl https://run.captaincore.io/migrate | bash -s -- --url="
+						https://mwp-orion-public.s3.us-west-2.amazonaws.com/backups/14265080/2024-Apr-25_backup_66438a9f031b86.57577476.zip" --update-urls
+						```
+					</section>
+
+					<section data-markdown>
+						The `--update-urls` flag determines whether or not to update the URLs in the WordPress database.
+
+						- Without  `--update-urls`, the URLs will not be updated
+						- With  `--update-urls`, the URLs will be changed to match the new WordPress site
+					</section>
+
+					
+				</section>
+				<section>
+					<section>
+						<h3>Ways to create a WordPress backup</h3>
+						<ul>
+							<li>With <a href="https://managewp.com/">ManageWP.com</a><br /><small>($2/month per site)</small></li>
+							<li>From WordPress admin <code>/wp-admin/</code> with <a href="https://solidwp.com/backups/">SolidBackups</a><br /><small>($99/year 1 site license)</small></li>
+							
+						</ul>
+					</section>
+					<section>
+						Downloading a ManageWP backup
+						<img src="img/managewp-backup.webp">
+					</section>
+					<section>
+						Grabbing the real ManageWP backup url with DevTools
+						<img src="img/managewp-real-backup-link.webp">
+					</section>
+					<section>
+						Grabbing backup url from SolidBackups
+						<img src="img/solidbackups.webp">
+					</section>
+					<section>
+						<ul>
+							<li>From SSH
+								<ul>
+									<li><code>cd public</code></li>
+									<li><code>wp db export --add-drop-table</code></li>
+									<li><code>cd ..</code></li>
+									<li><code>zip -r backup.zip public</code></li>
+									<li><code>mv backup.zip public/</code></li>
+								</ul>
+							</li>
+						</ul>
+						<p><small>Pro tip, read WP-CLI Database Backups with Emojis:<br />
+							<a href="https://anchor.host/wp-cli-database-backups-with-emojis/">https://anchor.host/wp-cli-database-backups-with-emojis/</a></small></p>
+					</section>
+					<section>
+						<ul>
+							<li>From cPanel
+								<ul>
+									<li>Open PHPmyadmin and export full database</li>
+									<li>Upload to home folder using file manager</li>
+									<li>Zip WordPress public folder using file manager</li>
+									<li>Move zip to public folder</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						Making backup zip of WordPress directory with cPanel
+						<img src="img/cpanel-backup.webp">
+					</section>
+					<section>
+						From your web host
+					</section>
+				</section>
+				<section>
+					<section>
+						<p>Don't download backups! <br />Instead migrate using a backup URL</p>
+
+						<small>
+							The speed improvements will be unmatched
+						</small>
+					</section>
+					<section>
+						<img src="img/migrating.webp">
+					</section>
+				</section>
+				<section>
+					Demo
+				</section>
+				<section>
+					Questions
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
+				markdown: {
+					breaks: true
+				}
+			});
+		</script>
+	</body>
+</html>
