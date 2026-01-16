@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Building a WordPress Maintenance CLI with AI</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+
+		<style>
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				text-transform: initial;
+			}
+			.reveal blockquote {
+			    padding: 1% 6%;
+			}
+			.small {
+				font-size: 2em;;
+			}
+			.reveal code {
+				background: #888;
+				font-size: 0.65em;
+				padding: 0.1em 0.25em;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-markdown>
+					### Building a WordPress Maintenance CLI *with AI*
+					## 🤖👨‍💻
+				</section>
+				<section data-markdown>
+					## Introducing `_do`
+					![](img/command-usage.webp)
+					<a href="https://captaincore.io/_do" target="_blank">https://captaincore.io/_do</a>
+				</section>
+				<section>
+				<section data-markdown>
+					## Backstory
+					- Years of random bash scripts, [like this one](https://anchor.host/identifying-bottleneck-plugins/).
+					- Random conversations with Google Gemini.📱
+					- Not a good way for others to use them. My toolkit CaptainCore is a beast to self-host.
+					- `_do` is a new way to run automated tasks.
+
+				</section>
+					<section data-markdown>
+						CaptainCore `_do` is made so other WordPress developers can use my automatted scripts.
+						![](img/_do.webp)
+					</section>
+				</section>
+				<section data-markdown>
+					## Coding architectures
+					| Single file | Many files |
+					| -------- | ------- |
+					| Simple yet messy | Increased complexity yet organized |
+					| Cowboy coder | Maintainable codebase |
+					| Easier to distribute | Requires build step |
+					| Easier to use AI coding | Requires extra steps AI coding | 
+				</section>
+				<section>
+				<section data-markdown>
+					## `_do` architecture
+					Started as a single file `_do.sh` and then breaked it into multiple files for better a maintainable codebase. Then added two scripts `watch.sh` and `compile.sh` to automate compiling back to a single file for distribution.
+
+					
+				</section>
+				<section data-markdown>
+					The intial conversation from 2 weeks ago which turned into `_do`: https://g.co/gemini/share/06679d77d930
+				</section>
+				</section>
+				<section data-markdown>
+					![](img/watch-script.webp)
+				</section>
+				<section>
+					<section data-markdown>
+						### AI's ability to generate code is limited by it's context window
+					</section>
+					<section data-markdown>
+						### A context window is simply how much infomation you and put into and get out of AI in a single request
+					</section>
+				</section>
+				<section data-markdown>
+					### Google Gemini 2.5
+					| Input | Output |
+					| -------- | ------- |
+					| 1 million tokens | 64k tokens |
+					| ~2-3 MBs | ~244 KBs |
+
+					1 token ≈ 4 characters
+				</section>
+				<section>
+					<a href="https://gemini.google/subscriptions/" target="_blank">gemini.google/subscriptions/</a>
+					<img src="img/gemini.webp">
+				</section>
+				<section>
+				<section data-markdown>
+					### Using `_do dump` to talk to Google Gemini
+					Dump allows you to target and package up any folder into a single TXT file.
+					
+				</section>
+				<section data-markdown>
+					### Using `_do dump` to talk to Google Gemini
+					![](img/codebase.webp)
+				</section>
+				<section data-markdown>
+					### Using `_do dump` to talk to Google Gemini
+					![](img/dump.webp)
+				</section>
+				</section>
+				<section data-markdown>
+					### Mixing AI code generation with human coding seems to be a good process.
+
+					1. Generate code with Google Gemini
+					2. Test code and modify as needed
+					3. `_do dump` and repeat
+				</section>
+				<section>
+					<section data-markdown>
+						AI is really good at looking at an existing code base and following it's structure.
+					</section>
+					<section data-markdown>
+						AI is really good at looking at generating a readme.md file based on the code itself.
+					</section>
+					<section data-markdown>
+						AI is really good at looking at generating a changelog.
+						https://g.co/gemini/share/a22d88ad8849
+					</section>
+				</section>
+				<section>
+					<section data-markdown>
+						What does web development look like in 5 years?
+						# 🤔
+					</section>
+					<section data-markdown>
+						Recommendations
+						- Use Google Gemini for a side project
+						- Try using Google Gemini on an existing project
+						- Try using Google Gemini on a new project
+					</section>
+					<section data-markdown>
+						The best developers of the future will be the best developers of the present using the tools of the future.
+					</section>
+					<section data-markdown>
+						Be intentional to learn as your coding with AI
+					</section>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
