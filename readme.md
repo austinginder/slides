@@ -1,20 +1,22 @@
 # Austin Ginder's Slides
 
-A lightweight, single-page archive of my presentations given at WordPress Meetups and WordCamps since 2015. This static site provides a searchable interface to browse slides by date, location, or title.
+A lightweight, single-page archive of my presentations given at WordPress Meetups and WordCamps since 2015. This static site provides a searchable interface to browse slides by year, venue, or title.
 
 ## 🚀 Features
 
 * **Instant Search:** Real-time filtering of presentations by title, date, or venue.
-* **Dark Mode:** Built-in dark/light mode toggle with smooth transitions.
+* **Command Palette:** Press <kbd>⌘K</kbd> / <kbd>Ctrl+K</kbd> to fuzzy-jump to any talk or run a command (switch theme, filter by year, view source), with full keyboard navigation.
+* **Grouped by Year:** Talks are organized into per-year sections with counts, filterable via year chips.
+* **Three-Way Theming:** System / Light / Dark appearance with a parchment-and-ink palette and smooth transitions.
+* **Live Stats:** Talks, years active, venues, and first-talk year computed from the data.
 * **Responsive Design:** Fully mobile-friendly interface.
 * **Zero Build Step:** Runs entirely in the browser using CDN-hosted libraries.
 
 ## 🛠️ Tech Stack
 
-* **HTML5**
-* **[Tailwind CSS](https://tailwindcss.com/):** Utility-first CSS framework (loaded via CDN).
-* **[Alpine.js](https://alpinejs.dev/):** Lightweight JavaScript framework for reactive behavior (search & filtering).
-* **Google Fonts:** Inter font family.
+* **HTML5** with inline CSS custom properties for theming.
+* **[Alpine.js](https://alpinejs.dev/):** Lightweight JavaScript framework for reactive behavior (search, filtering, theming, command palette), loaded via CDN.
+* **Google Fonts:** Space Grotesk (display/UI), JetBrains Mono (labels), and Newsreader (italic accents).
 
 ## 📦 Installation & Usage
 
