@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build Anything With Claude And WordPress — WordPress Lancaster Meetup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; height:100%; background:#161511; overflow:hidden; }
+  *, *::before, *::after { box-sizing:border-box; }
+  a { color:#CC785C; text-decoration:none; }
+  a:hover { color:#B15E42; }
+
+  /* Scaled 1920x1080 stage */
+  #viewport { position:fixed; inset:0; overflow:hidden; background:#161511; }
+  #deck { position:absolute; left:0; top:0; width:1920px; height:1080px; transform-origin:0 0; will-change:transform; }
+
+  section.slide { position:absolute; top:0; left:0; width:1920px; height:1080px; }
+  section.slide:not(.active) { display:none !important; }
+
+  code { font-family:'JetBrains Mono',monospace; }
+
+  /* Screenshot placeholders — swap the inner text for <img src="..." style="width:100%;height:100%;object-fit:cover"> */
+  .slot { width:100%; height:100%; display:flex; align-items:center; justify-content:center; text-align:center;
+          padding:16px; background:#E9E5D9; color:#9A9285; font-family:'JetBrains Mono',monospace;
+          font-size:22px; letter-spacing:.06em; border:1px dashed #CBC4B4; }
+
+  /* Chrome */
+  .progress { position:fixed; top:0; left:0; height:4px; background:#CC785C; transition:width .35s ease; z-index:50; }
+  .slide-number { position:fixed; bottom:20px; right:28px; color:#8A8377; font-size:15px; font-family:'JetBrains Mono',monospace; letter-spacing:.08em; z-index:50; }
+  .nav-hint { position:fixed; bottom:20px; left:28px; color:#5C594F; font-size:13px; font-family:'JetBrains Mono',monospace; z-index:50; }
+
+  /* Presenter notes (toggle with N) */
+  #notes { position:fixed; left:0; right:0; bottom:0; max-height:40vh; overflow:auto; padding:22px 32px;
+           background:rgba(22,21,17,.97); border-top:1px solid rgba(204,120,92,.4); color:#D8D3C6;
+           font-family:'Hanken Grotesk',sans-serif; font-size:19px; line-height:1.5; z-index:60; display:none; }
+  #notes.show { display:block; }
+  #notes .label { font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:#CC785C; margin-bottom:10px; }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="slide-number" id="slideNumber"></div>
+<div class="nav-hint">← → navigate · N notes · F fullscreen</div>
+
+<div id="viewport">
+<div id="deck">
+
+  <!-- 1 · TITLE -->
+  <section class="slide active" data-screen-label="01 Title" style="background:#21201C;color:#F2ECE1;font-family:'Hanken Grotesk',sans-serif;padding:104px 128px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.18em;text-transform:uppercase;color:#CC785C;font-weight:500;">WordPress Lancaster Meetup &nbsp;·&nbsp; Thursday, July 16, 2026 &nbsp;·&nbsp; 7:00 PM</div>
+    <div style="width:64px;height:2px;background:#CC785C;margin-top:26px;"></div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+      <h1 style="font-family:'Newsreader',serif;font-weight:400;font-size:148px;line-height:0.98;letter-spacing:-0.025em;margin:0;max-width:1500px;">Build anything with <em style="font-style:italic;color:#CC785C;">Claude</em> &amp; WordPress</h1>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:20px;font-size:30px;color:#B7B0A3;">
+      <span style="color:#F2ECE1;font-weight:600;">Austin Ginder</span>
+      <span style="color:#5C594F;">/</span>
+      <span>Anchor Hosting</span>
+    </div>
+  </section>
+
+  <!-- 2 · WHO / WHY ME -->
+  <section class="slide" data-screen-label="02 Who" style="background:#F0EEE6;color:#1B1A17;font-family:'Hanken Grotesk',sans-serif;padding:96px 128px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.18em;text-transform:uppercase;color:#CC785C;font-weight:500;">02 &nbsp;·&nbsp; Who's talking</div>
+    <div style="flex:1;display:flex;gap:88px;align-items:center;">
+      <div style="flex:1;">
+        <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:78px;line-height:1.02;letter-spacing:-0.02em;margin:0 0 52px;">A developer, one laptop,<br>a few thousand sites.</h2>
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:26px;font-size:33px;line-height:1.35;color:#3A3833;max-width:900px;">
+          <li style="display:flex;gap:20px;"><span style="color:#CC785C;font-weight:700;">•</span><span>I run <strong>Anchor Hosting</strong>, a few thousand WordPress sites, mostly solo.</span></li>
+          <li style="display:flex;gap:20px;"><span style="color:#CC785C;font-weight:700;">•</span><span>Developer first. One laptop since 2012.</span></li>
+          <li style="display:flex;gap:20px;"><span style="color:#CC785C;font-weight:700;">•</span><span>Since February 2026, I build almost everything with <strong>Claude Code</strong>.</span></li>
+          <li style="display:flex;gap:20px;"><span style="color:#CC785C;font-weight:700;">•</span><span>Tonight isn't theory. It's what I actually shipped this spring.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · THE ONE IDEA -->
+  <section class="slide" data-screen-label="03 The Idea" style="background:#CC785C;color:#FBF4EC;font-family:'Hanken Grotesk',sans-serif;padding:104px 128px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.18em;text-transform:uppercase;color:#3E2418;font-weight:600;">03 &nbsp;·&nbsp; The one idea to take home</div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;max-width:1560px;">
+      <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:104px;line-height:1.03;letter-spacing:-0.02em;margin:0;">The code output isn't the valuable part anymore. <em style="font-style:italic;color:#3E2418;">The direction is.</em></h2>
+    </div>
+    <ul style="list-style:none;margin:0;padding:0;display:flex;gap:56px;font-size:27px;line-height:1.4;color:#FBEFE6;">
+      <li style="flex:1;border-top:2px solid rgba(62,36,24,0.35);padding-top:22px;">With open source, the valuable thing was the code. You shared the code.</li>
+      <li style="flex:1;border-top:2px solid rgba(62,36,24,0.35);padding-top:22px;">With AI, what's valuable is <strong>how you directed the agent</strong> to get there.</li>
+      <li style="flex:1;border-top:2px solid rgba(62,36,24,0.35);padding-top:22px;">"Build anything" is real now. The bottleneck moved from typing to steering.</li>
+    </ul>
+  </section>
+
+  <!-- 4 · WHAT A CONVERSATION PRODUCES -->
+  <section class="slide" data-screen-label="04 Output" style="background:#F0EEE6;color:#1B1A17;font-family:'Hanken Grotesk',sans-serif;padding:96px 128px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.18em;text-transform:uppercase;color:#CC785C;font-weight:500;">04 &nbsp;·&nbsp; What "a conversation" actually produces</div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;max-width:1560px;">
+      <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:88px;line-height:1.02;letter-spacing:-0.02em;margin:0 0 56px;">Not a chatbot answer.<br>A running <em style="font-style:italic;color:#CC785C;">WordPress site.</em></h2>
+      <div style="display:flex;gap:24px;flex-wrap:wrap;margin-bottom:44px;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:24px;padding:14px 26px;background:#E7E3D8;border:1px solid #D8D3C6;border-radius:999px;color:#3A3833;">Custom plugins</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:24px;padding:14px 26px;background:#E7E3D8;border:1px solid #D8D3C6;border-radius:999px;color:#3A3833;">Database tables</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:24px;padding:14px 26px;background:#E7E3D8;border:1px solid #D8D3C6;border-radius:999px;color:#3A3833;">REST APIs</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:24px;padding:14px 26px;background:#E7E3D8;border:1px solid #D8D3C6;border-radius:999px;color:#3A3833;">Themes</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:24px;padding:14px 26px;background:#E7E3D8;border:1px solid #D8D3C6;border-radius:999px;color:#3A3833;">WP-CLI commands</span>
+      </div>
+      <p style="font-size:34px;line-height:1.4;color:#3A3833;margin:0;max-width:1360px;">Real WordPress, all the way down: no lock-in, no new framework to learn. The same skills you already have (<strong>WP-CLI, PHP, git</strong>) are now the steering wheel.</p>
+    </div>
+  </section>
+
+  <!-- 5 · THE DIRECTION -->
+  <section class="slide" data-screen-label="05 The Direction" style="background:#21201C;color:#F2ECE1;font-family:'Hanken Grotesk',sans-serif;padding:96px 128px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.18em;text-transform:uppercase;color:#CC785C;font-weight:500;">05 &nbsp;·&nbsp; What the direction looks like</div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;max-width:1620px;">
+      <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:86px;line-height:1.02;letter-spacing:-0.02em;margin:0 0 50px;">A few sentences of direction.<br><em style="font-style:italic;color:#CC785C;">Thirty minutes of building.</em></h2>
+      <div style="background:#1B1A16;border:1px solid #35322B;border-left:4px solid #CC785C;border-radius:8px;padding:34px 40px;max-width:1460px;margin-bottom:44px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:16px;letter-spacing:0.16em;text-transform:uppercase;color:#8A8377;margin-bottom:20px;">The direction</div>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:30px;line-height:1.55;color:#D8D3C6;margin:0;">Take this design and make a <span style="color:#E8A07E;font-weight:600;">custom WordPress theme</span>. Build a <span style="color:#E8A07E;font-weight:600;">custom plugin</span> for the engine &mdash; it <span style="color:#E8A07E;font-weight:600;">should have a custom database table</span>.</p>
+      </div>
+      <p style="font-size:33px;line-height:1.4;color:#C7C1B4;margin:0;max-width:1520px;">Those few sentences can run for <strong style="color:#F2ECE1;">30 minutes to an hour</strong>. A simple landing page is quick; a custom engine takes a while &mdash; but it's <em>not much more direction</em>. Name the architecture, and a few key terms drive some very complicated programming.</p>
+    </div>
+  </section>
+
+  <!-- 6 · THE WORKFLOW -->
+  <section class="slide" data-screen-label="06 Workflow" style="background:#F0EEE6;color:#1B1A17;font-family:'Hanken Grotesk',sans-serif;padding:86px 128px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.18em;text-transform:uppercase;color:#CC785C;font-weight:500;">06 &nbsp;·&nbsp; The workflow, idea to live site</div>
+    <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:60px;line-height:1.02;letter-spacing:-0.02em;margin:22px 0 40px;">Idea in a conversation, live site by end of the session.</h2>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:0;">
+      <div style="display:flex;gap:30px;align-items:baseline;padding:22px 0;border-top:1px solid #DCD7CA;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:34px;font-weight:600;color:#CC785C;width:56px;flex-shrink:0;">01</span>
+        <div style="display:flex;flex-direction:column;gap:4px;"><strong style="font-size:33px;">Design in Claude</strong><span style="font-size:26px;color:#6B675E;">Mock the whole UI as a Claude Design project, a <code style="font-size:24px;">.dc.html</code> prototype.</span></div>
+      </div>
+      <div style="display:flex;gap:30px;align-items:baseline;padding:22px 0;border-top:1px solid #DCD7CA;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:34px;font-weight:600;color:#CC785C;width:56px;flex-shrink:0;">02</span>
+        <div style="display:flex;flex-direction:column;gap:4px;"><strong style="font-size:33px;">Pull it into Claude Code</strong><span style="font-size:26px;color:#6B675E;">DesignSync reads the design; Claude translates it to WordPress. <code style="font-size:24px;">sc-for</code> → PHP loop, <code style="font-size:24px;">onClick</code> → a real route, hover → CSS.</span></div>
+      </div>
+      <div style="display:flex;gap:30px;align-items:baseline;padding:22px 0;border-top:1px solid #DCD7CA;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:34px;font-weight:600;color:#CC785C;width:56px;flex-shrink:0;">03</span>
+        <div style="display:flex;flex-direction:column;gap:4px;"><strong style="font-size:33px;">Build &amp; run locally on Cove</strong><span style="font-size:26px;color:#6B675E;">Every project runs locally on my Mac via <a href="https://cove.run">cove.run</a> before it ever touches production. You don't even need to know what Cove is, Claude does.</span></div>
+      </div>
+      <div style="display:flex;gap:30px;align-items:baseline;padding:22px 0;border-top:1px solid #DCD7CA;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:34px;font-weight:600;color:#CC785C;width:56px;flex-shrink:0;">04</span>
+        <div style="display:flex;flex-direction:column;gap:4px;"><strong style="font-size:33px;">Verify in a real browser</strong><span style="font-size:26px;color:#6B675E;">Claude drives Chrome, screenshots light + dark, catches what code review misses.</span></div>
+      </div>
+      <div style="display:flex;gap:30px;align-items:baseline;padding:22px 0;border-top:1px solid #DCD7CA;border-bottom:1px solid #DCD7CA;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:34px;font-weight:600;color:#CC785C;width:56px;flex-shrink:0;">05</span>
+        <div style="display:flex;flex-direction:column;gap:4px;"><strong style="font-size:33px;">Ship via self-hosted updates</strong><span style="font-size:26px;color:#6B675E;">GitHub release + a <code style="font-size:24px;">manifest.json</code> self-updater. The release <em>is</em> the deploy. No wp.org, no CI.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · PROJECT 1 DIVIDER -->
+  <section class="slide" data-screen-label="07 League Report" style="background:#21201C;color:#F2ECE1;font-family:'Hanken Grotesk',sans-serif;padding:104px 128px;display:flex;flex-direction:column;overflow:hidden;position:relative;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:220px;font-weight:600;color:rgba(204,120,92,0.10);position:absolute;top:40px;right:96px;line-height:1;">01</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.18em;text-transform:uppercase;color:#CC785C;font-weight:500;">Project 01</div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+      <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:140px;line-height:0.98;letter-spacing:-0.025em;margin:0 0 22px;">League Report</h2>
+      <p style="font-size:40px;color:#C7C0B2;margin:0;">The real-world rescue.</p>
+      <p style="font-size:31px;color:#948D80;margin:36px 0 0;max-width:1300px;line-height:1.4;">LeagueLineup / Stack Sports announced they were shutting down, and years of amateur softball league history were about to be deleted.</p>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px;font-family:'JetBrains Mono',monospace;font-size:26px;color:#F2ECE1;"><span style="width:10px;height:10px;background:#CC785C;border-radius:2px;"></span>league.report</div>
+  </section>
+
+  <!-- 8 · LEAGUE REPORT · WHAT GOT BUILT -->
+  <section class="slide" data-screen-label="08 LR Built" style="background:#F0EEE6;color:#1B1A17;font-family:'Hanken Grotesk',sans-serif;padding:88px 128px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.18em;text-transform:uppercase;color:#CC785C;font-weight:500;">League Report &nbsp;·&nbsp; What got built</div>
+    <div style="flex:1;display:flex;gap:72px;align-items:center;">
+      <div style="flex:1;min-width:0;">
+        <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:60px;line-height:1.02;letter-spacing:-0.02em;margin:16px 0 34px;">Every league gets its own private, secret URL.</h2>
+        <ul style="list-style:none;margin:0 0 40px;padding:0;display:flex;flex-direction:column;gap:20px;font-size:29px;line-height:1.34;color:#3A3833;">
+          <li style="display:flex;gap:18px;"><span style="color:#CC785C;font-weight:700;">•</span><span>Schedule, standings, results, rosters, photos, news, files, member directory.</span></li>
+          <li style="display:flex;gap:18px;"><span style="color:#CC785C;font-weight:700;">•</span><span>Non-technical commissioners edit scores and rosters <strong>inline on the live page</strong>, no wp-admin.</span></li>
+          <li style="display:flex;gap:18px;"><span style="color:#CC785C;font-weight:700;">•</span><span>Crawled the dying platform into SQLite, imported <strong>3,045 leagues</strong>.</span></li>
+          <li style="display:flex;gap:18px;"><span style="color:#CC785C;font-weight:700;">•</span><span>Claude even named the project. "League Report" was a placeholder I asked it to replace.</span></li>
+        </ul>
+        <div style="display:flex;gap:52px;">
+          <div><div style="font-family:'JetBrains Mono',monospace;font-size:58px;font-weight:600;line-height:1;">14</div><div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.12em;text-transform:uppercase;color:#8A8377;margin-top:8px;">DB tables</div></div>
+          <div><div style="font-family:'JetBrains Mono',monospace;font-size:58px;font-weight:600;line-height:1;">22</div><div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.12em;text-transform:uppercase;color:#8A8377;margin-top:8px;">REST controllers</div></div>
+          <div><div style="font-family:'JetBrains Mono',monospace;font-size:58px;font-weight:600;line-height:1;">19</div><div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.12em;text-transform:uppercase;color:#8A8377;margin-top:8px;">Page templates</div></div>
+        </div>
+      </div>
+      <div style="width:760px;flex-shrink:0;display:flex;flex-direction:column;background:#FAF9F5;border:1px solid #D8D3C6;border-radius:10px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(30,28,24,0.35);">
+        <div style="display:flex;align-items:center;gap:8px;padding:14px 18px;background:#ECE8DD;border-bottom:1px solid #D8D3C6;">
+          <span style="width:12px;height:12px;border-radius:50%;background:#D8735C;"></span><span style="width:12px;height:12px;border-radius:50%;background:#E0B24A;"></span><span style="width:12px;height:12px;border-radius:50%;background:#8FB56B;"></span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:24px;color:#8A8377;margin-left:14px;">league.report</span>
+        </div>
+        <a href="https://league.report" target="_blank" rel="noopener" style="display:block;height:452px;"><img src="images/lr.webp" alt="League Report homepage" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 · LEAGUE REPORT · WHAT IT TOOK -->
+  <section class="slide" data-screen-label="09 LR Took" style="background:#F0EEE6;color:#1B1A17;font-family:'Hanken Grotesk',sans-serif;padding:88px 128px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.18em;text-transform:uppercase;color:#CC785C;font-weight:500;">League Report &nbsp;·&nbsp; What it took</div>
+    <div style="display:flex;gap:0;margin:40px 0 46px;border-top:2px solid #1B1A17;border-bottom:1px solid #DCD7CA;">
+      <div style="flex:1;padding:32px 0;"><div style="font-family:'JetBrains Mono',monospace;font-size:84px;font-weight:600;line-height:1;">92</div><div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.12em;text-transform:uppercase;color:#8A8377;margin-top:12px;">Days</div></div>
+      <div style="flex:1;padding:32px 0;"><div style="font-family:'JetBrains Mono',monospace;font-size:84px;font-weight:600;line-height:1;">30</div><div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.12em;text-transform:uppercase;color:#8A8377;margin-top:12px;">Claude Code sessions</div></div>
+      <div style="flex:1;padding:32px 0;"><div style="font-family:'JetBrains Mono',monospace;font-size:84px;font-weight:600;line-height:1;">561</div><div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.12em;text-transform:uppercase;color:#8A8377;margin-top:12px;">Human turns of direction</div></div>
+    </div>
+    <div style="flex:1;display:flex;gap:72px;">
+      <ul style="list-style:none;margin:0;padding:0;flex:1;display:flex;flex-direction:column;gap:22px;font-size:29px;line-height:1.34;color:#3A3833;">
+        <li style="display:flex;gap:18px;"><span style="color:#CC785C;font-weight:700;">•</span><span><strong>~5,900 lines</strong> of working code by the end of session one.</span></li>
+        <li style="display:flex;gap:18px;"><span style="color:#CC785C;font-weight:700;">•</span><span>103 screenshots handed over · 26 hard interrupts · 7 course-corrections.</span></li>
+        <li style="display:flex;gap:18px;"><span style="color:#CC785C;font-weight:700;">•</span><span>Solo, no git repo. Ships by zipping and <code style="font-size:24px;">wp ... install --force</code> over SSH.</span></li>
+      </ul>
+      <blockquote style="flex:1;margin:0;padding:34px 40px;background:#FAF9F5;border-left:4px solid #CC785C;border-radius:0 8px 8px 0;font-family:'Newsreader',serif;font-size:38px;font-style:italic;line-height:1.3;color:#2A2824;display:flex;flex-direction:column;justify-content:center;">
+        "Bah… I think it was better before. Can we revert?"
+        <span style="font-family:'JetBrains Mono',monospace;font-style:normal;font-size:24px;letter-spacing:0.08em;color:#8A8377;margin-top:22px;text-transform:uppercase;">A real human moment · the v2 redesign</span>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- 10 · PROJECT 2 DIVIDER -->
+  <section class="slide" data-screen-label="10 Dismissed" style="background:#21201C;color:#F2ECE1;font-family:'Hanken Grotesk',sans-serif;padding:104px 128px;display:flex;flex-direction:column;overflow:hidden;position:relative;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:220px;font-weight:600;color:rgba(204,120,92,0.10);position:absolute;top:40px;right:96px;line-height:1;">02</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.18em;text-transform:uppercase;color:#CC785C;font-weight:500;">Project 02</div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+      <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:140px;line-height:0.98;letter-spacing:-0.025em;margin:0 0 22px;">Dismissed.FYI</h2>
+      <p style="font-size:40px;color:#C7C0B2;margin:0;">Designed in a morning.</p>
+      <p style="font-size:31px;color:#948D80;margin:36px 0 0;max-width:1300px;line-height:1.4;">A public hall of shame for WordPress admin-notice spam: every license nag, review beg, telemetry opt-in and upsell, catalogued and ranked by intent.</p>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px;font-family:'JetBrains Mono',monospace;font-size:26px;color:#F2ECE1;"><span style="width:10px;height:10px;background:#CC785C;border-radius:2px;"></span>dismissed.fyi</div>
+  </section>
+
+  <!-- 11 · DISMISSED · DESIGN TO CODE -->
+  <section class="slide" data-screen-label="11 D Design" style="background:#F0EEE6;color:#1B1A17;font-family:'Hanken Grotesk',sans-serif;padding:88px 128px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.18em;text-transform:uppercase;color:#CC785C;font-weight:500;">Dismissed.FYI &nbsp;·&nbsp; The design-to-code story</div>
+    <div style="flex:1;display:flex;gap:72px;align-items:center;">
+      <div style="flex:1;min-width:0;">
+        <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:60px;line-height:1.02;letter-spacing:-0.02em;margin:16px 0 34px;">The WordPress build is a <em style="font-style:italic;color:#CC785C;">direct port</em> of the design.</h2>
+        <ul style="list-style:none;margin:0 0 40px;padding:0;display:flex;flex-direction:column;gap:20px;font-size:29px;line-height:1.34;color:#3A3833;">
+          <li style="display:flex;gap:18px;"><span style="color:#CC785C;font-weight:700;">•</span><span>Started as a single Claude Design mockup one morning (Jun 5).</span></li>
+          <li style="display:flex;gap:18px;"><span style="color:#CC785C;font-weight:700;">•</span><span>The code comments literally say <em>"mirrors the design's data.js."</em></span></li>
+          <li style="display:flex;gap:18px;"><span style="color:#CC785C;font-weight:700;">•</span><span>11 of 20 sessions opened with a saved slash-command workflow I'd codified.</span></li>
+        </ul>
+        <div style="display:flex;gap:52px;">
+          <div><div style="font-family:'JetBrains Mono',monospace;font-size:58px;font-weight:600;line-height:1;">28</div><div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.12em;text-transform:uppercase;color:#8A8377;margin-top:8px;">Days</div></div>
+          <div><div style="font-family:'JetBrains Mono',monospace;font-size:58px;font-weight:600;line-height:1;">20</div><div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.12em;text-transform:uppercase;color:#8A8377;margin-top:8px;">Sessions</div></div>
+          <div><div style="font-family:'JetBrains Mono',monospace;font-size:58px;font-weight:600;line-height:1;">269</div><div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.12em;text-transform:uppercase;color:#8A8377;margin-top:8px;">Turns</div></div>
+        </div>
+      </div>
+      <div style="width:760px;flex-shrink:0;display:flex;flex-direction:column;background:#FAF9F5;border:1px solid #D8D3C6;border-radius:10px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(30,28,24,0.35);">
+        <div style="display:flex;align-items:center;gap:8px;padding:14px 18px;background:#ECE8DD;border-bottom:1px solid #D8D3C6;">
+          <span style="width:12px;height:12px;border-radius:50%;background:#D8735C;"></span><span style="width:12px;height:12px;border-radius:50%;background:#E0B24A;"></span><span style="width:12px;height:12px;border-radius:50%;background:#8FB56B;"></span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:24px;color:#8A8377;margin-left:14px;">dismissed.fyi</span>
+        </div>
+        <a href="https://dismissed.fyi" target="_blank" rel="noopener" style="display:block;height:452px;"><img src="images/dismissed.webp" alt="Dismissed.FYI homepage" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 · DISMISSED · THE CLEVER PART -->
+  <section class="slide" data-screen-label="12 D Clever" style="background:#F0EEE6;color:#1B1A17;font-family:'Hanken Grotesk',sans-serif;padding:96px 128px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.18em;text-transform:uppercase;color:#CC785C;font-weight:500;">Dismissed.FYI &nbsp;·&nbsp; The clever part</div>
+    <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:66px;line-height:1.02;letter-spacing:-0.02em;margin:20px 0 48px;max-width:1500px;">Not scraping HTML. <em style="font-style:italic;color:#CC785C;">Reflecting into the code itself.</em></h2>
+    <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:28px 64px;align-content:center;">
+      <div style="display:flex;gap:20px;"><span style="font-family:'JetBrains Mono',monospace;font-size:24px;color:#CC785C;font-weight:600;">01</span><p style="margin:0;font-size:30px;line-height:1.36;color:#3A3833;">Admin notices are just callbacks. Enumerate them, then use <strong>PHP Reflection</strong> to pin the exact <code style="font-size:25px;">file:line</code>.</p></div>
+      <div style="display:flex;gap:20px;"><span style="font-family:'JetBrains Mono',monospace;font-size:24px;color:#CC785C;font-weight:600;">02</span><p style="margin:0;font-size:30px;line-height:1.36;color:#3A3833;">Severity = how much of wp-admin it hijacks. Renders on <strong>3+ unrelated screens</strong> = auto-critical.</p></div>
+      <div style="display:flex;gap:20px;"><span style="font-family:'JetBrains Mono',monospace;font-size:24px;color:#CC785C;font-weight:600;">03</span><p style="margin:0;font-size:30px;line-height:1.36;color:#3A3833;">Ranked by intent: <strong>Critical</strong> = pure vendor benefit, <strong>Low</strong> = actually serves you.</p></div>
+      <div style="display:flex;gap:20px;"><span style="font-family:'JetBrains Mono',monospace;font-size:24px;color:#CC785C;font-weight:600;">04</span><p style="margin:0;font-size:30px;line-height:1.36;color:#3A3833;">Everything renders in a <strong>throwaway local sandbox</strong>, fed plugin files from a wp.org mirror. Never a live site.</p></div>
+    </div>
+  </section>
+
+  <!-- 13 · DISMISSED · RESPONSIBLE BUILDING -->
+  <section class="slide" data-screen-label="13 D Responsible" style="background:#CC785C;color:#FBF4EC;font-family:'Hanken Grotesk',sans-serif;padding:100px 128px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.18em;text-transform:uppercase;color:#3E2418;font-weight:600;">Dismissed.FYI &nbsp;·&nbsp; Building responsibly</div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;max-width:1560px;">
+      <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:84px;line-height:1.03;letter-spacing:-0.02em;margin:0 0 44px;">Building fast still means <em style="font-style:italic;color:#3E2418;">catching your own mistakes.</em></h2>
+      <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:22px;font-size:31px;line-height:1.36;color:#FBEFE6;">
+        <li style="display:flex;gap:18px;"><span style="color:#3E2418;font-weight:700;">•</span><span>Early versions rendered notices against live sites.</span></li>
+        <li style="display:flex;gap:18px;"><span style="color:#3E2418;font-weight:700;">•</span><span>One nag baked a real customer's account name into a public card.</span></li>
+        <li style="display:flex;gap:18px;"><span style="color:#3E2418;font-weight:700;">•</span><span><strong>July 1: hard architecture pivot</strong>. Retired all live-site rendering, moved to local sandboxes.</span></li>
+        <li style="display:flex;gap:18px;"><span style="color:#3E2418;font-weight:700;">•</span><span>The agent will do exactly what you steer it to. That responsibility stays yours.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 14 · PROJECT 3 DIVIDER -->
+  <section class="slide" data-screen-label="14 Rutter" style="background:#21201C;color:#F2ECE1;font-family:'Hanken Grotesk',sans-serif;padding:104px 128px;display:flex;flex-direction:column;overflow:hidden;position:relative;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:220px;font-weight:600;color:rgba(204,120,92,0.10);position:absolute;top:40px;right:96px;line-height:1;">03</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.18em;text-transform:uppercase;color:#CC785C;font-weight:500;">Project 03</div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+      <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:140px;line-height:0.98;letter-spacing:-0.025em;margin:0 0 22px;">Rutter</h2>
+      <p style="font-size:40px;color:#C7C0B2;margin:0;">Built in one evening.</p>
+      <p style="font-size:31px;color:#948D80;margin:36px 0 0;max-width:1320px;line-height:1.4;">Open source for AI builds. GitHub shares the code. Rutter shares the <em>flow</em>: browsable recaps of how a human steered an agent. A rutter is a sailor's book of directions.</p>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px;font-family:'JetBrains Mono',monospace;font-size:26px;color:#F2ECE1;"><span style="width:10px;height:10px;background:#CC785C;border-radius:2px;"></span>rutter.run</div>
+  </section>
+
+  <!-- 15 · RUTTER · ONE SESSION -->
+  <section class="slide" data-screen-label="15 R Session" style="background:#F0EEE6;color:#1B1A17;font-family:'Hanken Grotesk',sans-serif;padding:88px 128px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.18em;text-transform:uppercase;color:#CC785C;font-weight:500;">Rutter &nbsp;·&nbsp; Conceived and built in a single session</div>
+    <div style="flex:1;display:flex;gap:72px;align-items:center;">
+      <div style="flex:1;min-width:0;">
+        <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:60px;line-height:1.02;letter-spacing:-0.02em;margin:16px 0 34px;">Idea to design to named product to working site, <em style="font-style:italic;color:#CC785C;">all in one sitting.</em></h2>
+        <ul style="list-style:none;margin:0 0 40px;padding:0;display:flex;flex-direction:column;gap:20px;font-size:29px;line-height:1.34;color:#3A3833;">
+          <li style="display:flex;gap:18px;"><span style="color:#CC785C;font-weight:700;">•</span><span>One 22-turn Claude Code session, one evening (~2.5 hours).</span></li>
+          <li style="display:flex;gap:18px;"><span style="color:#CC785C;font-weight:700;">•</span><span>Design as a <code style="font-size:24px;">.dc.html</code>, imported over the design MCP, hand-built into a theme + plugin.</span></li>
+          <li style="display:flex;gap:18px;"><span style="color:#CC785C;font-weight:700;">•</span><span><code style="font-size:24px;">rutter-core</code>: a custom table, its own <code style="font-size:24px;">/r/&lt;slug&gt;/</code> routing, a WP-CLI command.</span></li>
+          <li style="display:flex;gap:18px;"><span style="color:#CC785C;font-weight:700;">•</span><span>Dogfooded immediately. The first recap was Rutter's own build data.</span></li>
+        </ul>
+        <div style="display:flex;gap:52px;">
+          <div><div style="font-family:'JetBrains Mono',monospace;font-size:58px;font-weight:600;line-height:1;">1</div><div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.12em;text-transform:uppercase;color:#8A8377;margin-top:8px;">Evening</div></div>
+          <div><div style="font-family:'JetBrains Mono',monospace;font-size:58px;font-weight:600;line-height:1;">22</div><div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.12em;text-transform:uppercase;color:#8A8377;margin-top:8px;">Turns</div></div>
+          <div><div style="font-family:'JetBrains Mono',monospace;font-size:58px;font-weight:600;line-height:1;">~2.5h</div><div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.12em;text-transform:uppercase;color:#8A8377;margin-top:8px;">Start to ship</div></div>
+        </div>
+      </div>
+      <div style="width:760px;flex-shrink:0;display:flex;flex-direction:column;background:#FAF9F5;border:1px solid #D8D3C6;border-radius:10px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(30,28,24,0.35);">
+        <div style="display:flex;align-items:center;gap:8px;padding:14px 18px;background:#ECE8DD;border-bottom:1px solid #D8D3C6;">
+          <span style="width:12px;height:12px;border-radius:50%;background:#D8735C;"></span><span style="width:12px;height:12px;border-radius:50%;background:#E0B24A;"></span><span style="width:12px;height:12px;border-radius:50%;background:#8FB56B;"></span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:24px;color:#8A8377;margin-left:14px;">rutter.run</span>
+        </div>
+        <a href="https://rutter.run" target="_blank" rel="noopener" style="display:block;height:452px;"><img src="images/rutter.webp" alt="Rutter homepage" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16 · THE SPECTRUM -->
+  <section class="slide" data-screen-label="16 Spectrum" style="background:#F0EEE6;color:#1B1A17;font-family:'Hanken Grotesk',sans-serif;padding:96px 128px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.18em;text-transform:uppercase;color:#CC785C;font-weight:500;">16 &nbsp;·&nbsp; The spectrum</div>
+    <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:76px;line-height:1.02;letter-spacing:-0.02em;margin:20px 0 56px;">Same workflow. <em style="font-style:italic;color:#CC785C;">Wildly different scope.</em></h2>
+    <div style="flex:1;display:flex;gap:32px;align-items:stretch;">
+      <div style="flex:1;background:#FAF9F5;border:1px solid #D8D3C6;border-radius:12px;padding:44px 40px;display:flex;flex-direction:column;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.14em;text-transform:uppercase;color:#8A8377;">League Report</div>
+        <div style="font-family:'Newsreader',serif;font-size:88px;line-height:1;margin:20px 0 6px;">92 <span style="font-size:34px;color:#6B675E;">days</span></div>
+        <div style="flex:1;"></div>
+        <p style="font-size:28px;color:#3A3833;margin:0;line-height:1.35;">A full platform for real clients.</p>
+      </div>
+      <div style="flex:1;background:#FAF9F5;border:1px solid #D8D3C6;border-radius:12px;padding:44px 40px;display:flex;flex-direction:column;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.14em;text-transform:uppercase;color:#8A8377;">Dismissed.FYI</div>
+        <div style="font-family:'Newsreader',serif;font-size:88px;line-height:1;margin:20px 0 6px;">28 <span style="font-size:34px;color:#6B675E;">days</span></div>
+        <div style="flex:1;"></div>
+        <p style="font-size:28px;color:#3A3833;margin:0;line-height:1.35;">Designed in a morning.</p>
+      </div>
+      <div style="flex:1;background:#21201C;border-radius:12px;padding:44px 40px;display:flex;flex-direction:column;color:#F2ECE1;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.14em;text-transform:uppercase;color:#CC785C;">Rutter</div>
+        <div style="font-family:'Newsreader',serif;font-size:88px;line-height:1;margin:20px 0 6px;">1 <span style="font-size:34px;color:#B7B0A3;">evening</span></div>
+        <div style="flex:1;"></div>
+        <p style="font-size:28px;color:#C7C0B2;margin:0;line-height:1.35;">Idea to live site in one sitting.</p>
+      </div>
+    </div>
+    <p style="font-family:'Newsreader',serif;font-style:italic;font-size:36px;color:#2A2824;margin:44px 0 0;">"Build anything" means anything.</p>
+  </section>
+
+  <!-- 17 · LIGHTNING ROSTER -->
+  <section class="slide" data-screen-label="17 Roster" style="background:#F0EEE6;color:#1B1A17;font-family:'Hanken Grotesk',sans-serif;padding:78px 128px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.18em;text-transform:uppercase;color:#CC785C;font-weight:500;">17 &nbsp;·&nbsp; Built the same way, the lightning roster</div>
+    <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:52px;line-height:1.02;letter-spacing:-0.02em;margin:16px 0 34px;">Three tonight. The same pipeline runs across everything I ship.</h2>
+    <div style="flex:1;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1fr;gap:20px;">
+      <div style="background:#FAF9F5;border:1px solid #D8D3C6;border-radius:10px;padding:22px 26px;display:flex;flex-direction:column;">
+        <div style="font-family:'Newsreader',serif;font-size:32px;line-height:1.05;">WP Beacon</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:24px;color:#CC785C;margin:6px 0 14px;">wpbeacon.io</div>
+        <p style="font-size:24px;line-height:1.28;color:#6B675E;margin:0;">Plugin supply-chain intelligence, backed by a full git mirror of wp.org.</p>
+      </div>
+      <div style="background:#FAF9F5;border:1px solid #D8D3C6;border-radius:10px;padding:22px 26px;display:flex;flex-direction:column;">
+        <div style="font-family:'Newsreader',serif;font-size:32px;line-height:1.05;">WP Registry</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:24px;color:#CC785C;margin:6px 0 14px;">wpregistry.io</div>
+        <p style="font-size:24px;line-height:1.28;color:#6B675E;margin:0;">A content-addressed WordPress security registry.</p>
+      </div>
+      <div style="background:#FAF9F5;border:1px solid #D8D3C6;border-radius:10px;padding:22px 26px;display:flex;flex-direction:column;">
+        <div style="font-family:'Newsreader',serif;font-size:32px;line-height:1.05;">Minn Admin</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:24px;color:#CC785C;margin:6px 0 14px;">reimagined wp-admin</div>
+        <p style="font-size:24px;line-height:1.28;color:#6B675E;margin:0;">A no-build SPA served alongside the classic wp-admin.</p>
+      </div>
+      <div style="background:#FAF9F5;border:1px solid #D8D3C6;border-radius:10px;padding:22px 26px;display:flex;flex-direction:column;">
+        <div style="font-family:'Newsreader',serif;font-size:32px;line-height:1.05;">Disembark</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:24px;color:#CC785C;margin:6px 0 14px;">disembark.host</div>
+        <p style="font-size:24px;line-height:1.28;color:#6B675E;margin:0;">Dark single-page marketing site for the backup product.</p>
+      </div>
+      <div style="background:#FAF9F5;border:1px solid #D8D3C6;border-radius:10px;padding:22px 26px;display:flex;flex-direction:column;">
+        <div style="font-family:'Newsreader',serif;font-size:32px;line-height:1.05;">Seafloor</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:24px;color:#CC785C;margin:6px 0 14px;">page content as JSON</div>
+        <p style="font-size:24px;line-height:1.28;color:#6B675E;margin:0;">Page content as structured JSON, edited entirely from WP-CLI.</p>
+      </div>
+      <div style="background:#FAF9F5;border:1px solid #D8D3C6;border-radius:10px;padding:22px 26px;display:flex;flex-direction:column;">
+        <div style="font-family:'Newsreader',serif;font-size:32px;line-height:1.05;">Anchor Blocks</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:24px;color:#CC785C;margin:6px 0 14px;">Gutenberg blocks</div>
+        <p style="font-size:24px;line-height:1.28;color:#6B675E;margin:0;">Custom server-rendered Gutenberg blocks for the blog.</p>
+      </div>
+      <div style="background:#FAF9F5;border:1px solid #D8D3C6;border-radius:10px;padding:22px 26px;display:flex;flex-direction:column;">
+        <div style="font-family:'Newsreader',serif;font-size:32px;line-height:1.05;">Cove</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:24px;color:#CC785C;margin:6px 0 14px;">cove.run</div>
+        <p style="font-size:24px;line-height:1.28;color:#6B675E;margin:0;">The local WordPress dev CLI every one of these runs on.</p>
+      </div>
+      <div style="background:#21201C;border-radius:10px;padding:22px 26px;display:flex;flex-direction:column;color:#F2ECE1;">
+        <div style="font-family:'Newsreader',serif;font-size:32px;line-height:1.05;">CaptainCore</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:24px;color:#CC785C;margin:6px 0 14px;">anchor.host</div>
+        <p style="font-size:24px;line-height:1.28;color:#B7B0A3;margin:0;">The fleet control plane behind the whole operation.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 18 · TIPS & TRICKS -->
+  <section class="slide" data-screen-label="18 Tips" style="background:#F0EEE6;color:#1B1A17;font-family:'Hanken Grotesk',sans-serif;padding:74px 128px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.18em;text-transform:uppercase;color:#CC785C;font-weight:500;">18 &nbsp;·&nbsp; Tips &amp; tricks for getting the most out of Claude Code</div>
+    <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:20px 72px;align-content:center;margin-top:24px;">
+      <div style="display:flex;gap:18px;border-top:1px solid #DCD7CA;padding-top:16px;"><span style="font-family:'JetBrains Mono',monospace;font-size:20px;color:#CC785C;font-weight:600;">01</span><p style="margin:0;font-size:25px;line-height:1.32;color:#3A3833;"><strong>Design first.</strong> Mock the UI, then let Claude translate it to PHP. Implement against a spec, not a guess.</p></div>
+      <div style="display:flex;gap:18px;border-top:1px solid #DCD7CA;padding-top:16px;"><span style="font-family:'JetBrains Mono',monospace;font-size:20px;color:#CC785C;font-weight:600;">02</span><p style="margin:0;font-size:25px;line-height:1.32;color:#3A3833;"><strong>Never touch prod directly.</strong> Every project gets a <code style="font-size:24px;">*.localhost</code> site first.</p></div>
+      <div style="display:flex;gap:18px;border-top:1px solid #DCD7CA;padding-top:16px;"><span style="font-family:'JetBrains Mono',monospace;font-size:20px;color:#CC785C;font-weight:600;">03</span><p style="margin:0;font-size:25px;line-height:1.32;color:#3A3833;"><strong>Make it verify in a browser.</strong> Claude drives Chrome and screenshots both themes before "done."</p></div>
+      <div style="display:flex;gap:18px;border-top:1px solid #DCD7CA;padding-top:16px;"><span style="font-family:'JetBrains Mono',monospace;font-size:20px;color:#CC785C;font-weight:600;">04</span><p style="margin:0;font-size:25px;line-height:1.32;color:#3A3833;"><strong>Persist hard-won architecture as memory.</strong> Gotchas survive across sessions.</p></div>
+      <div style="display:flex;gap:18px;border-top:1px solid #DCD7CA;padding-top:16px;"><span style="font-family:'JetBrains Mono',monospace;font-size:20px;color:#CC785C;font-weight:600;">05</span><p style="margin:0;font-size:25px;line-height:1.32;color:#3A3833;"><strong>Standardize your commits.</strong> Emoji-Log: NEW / IMPROVE / FIX / DOC / RELEASE.</p></div>
+      <div style="display:flex;gap:18px;border-top:1px solid #DCD7CA;padding-top:16px;"><span style="font-family:'JetBrains Mono',monospace;font-size:20px;color:#CC785C;font-weight:600;">06</span><p style="margin:0;font-size:25px;line-height:1.32;color:#3A3833;"><strong>Self-host updates.</strong> A <code style="font-size:24px;">manifest.json</code> self-updater. The GitHub release is the deploy.</p></div>
+      <div style="display:flex;gap:18px;border-top:1px solid #DCD7CA;padding-top:16px;grid-column:1 / -1;"><span style="font-family:'JetBrains Mono',monospace;font-size:20px;color:#CC785C;font-weight:600;">07</span><p style="margin:0;font-size:25px;line-height:1.32;color:#3A3833;"><strong>Mine your own history.</strong> command-center indexes 1,400+ past sessions, so your prior AI work becomes a reusable knowledge base.</p></div>
+    </div>
+  </section>
+
+  <!-- 19 · ONE COMMAND, THE WHOLE RELEASE -->
+  <section class="slide" data-screen-label="19 Cut A Release" style="background:#CC785C;color:#FBF4EC;font-family:'Hanken Grotesk',sans-serif;padding:92px 128px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.18em;text-transform:uppercase;color:#3E2418;font-weight:600;">19 &nbsp;·&nbsp; One skill, the whole release</div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;max-width:1680px;">
+      <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:78px;line-height:1.02;letter-spacing:-0.02em;margin:0 0 30px;">One skill per project. Then just say <em style="font-style:italic;color:#3E2418;">"cut a release."</em></h2>
+      <div style="display:flex;align-items:center;gap:24px;margin-bottom:38px;flex-wrap:wrap;">
+        <div style="display:inline-flex;align-items:center;gap:16px;background:#21201C;border-radius:10px;padding:18px 28px;font-family:'JetBrains Mono',monospace;font-size:28px;">
+          <span style="color:#CC785C;font-weight:600;">/dev-minn-admin</span><span style="color:#5C594F;">&nbsp;›&nbsp;</span><span style="color:#F2ECE1;">cut a release</span>
+        </div>
+        <span style="font-size:26px;color:#FBEFE6;">One runbook holds every step. Two words run all of it:</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px 72px;">
+        <div style="display:flex;gap:18px;align-items:baseline;border-top:2px solid rgba(62,36,24,0.32);padding-top:16px;"><span style="font-family:'JetBrains Mono',monospace;font-size:22px;color:#3E2418;font-weight:700;">01</span><p style="margin:0;font-size:29px;line-height:1.3;color:#FBEFE6;">Runs the full <strong>Playwright test suite</strong> &mdash; green, or no release.</p></div>
+        <div style="display:flex;gap:18px;align-items:baseline;border-top:2px solid rgba(62,36,24,0.32);padding-top:16px;"><span style="font-family:'JetBrains Mono',monospace;font-size:22px;color:#3E2418;font-weight:700;">02</span><p style="margin:0;font-size:29px;line-height:1.3;color:#FBEFE6;"><strong>Bumps the version</strong> in all four places, dates the changelog.</p></div>
+        <div style="display:flex;gap:18px;align-items:baseline;border-top:2px solid rgba(62,36,24,0.32);padding-top:16px;"><span style="font-family:'JetBrains Mono',monospace;font-size:22px;color:#3E2418;font-weight:700;">03</span><p style="margin:0;font-size:29px;line-height:1.3;color:#FBEFE6;">Commits, zips, and <strong>publishes the GitHub release</strong>.</p></div>
+        <div style="display:flex;gap:18px;align-items:baseline;border-top:2px solid rgba(62,36,24,0.32);padding-top:16px;"><span style="font-family:'JetBrains Mono',monospace;font-size:22px;color:#3E2418;font-weight:700;">04</span><p style="margin:0;font-size:29px;line-height:1.3;color:#FBEFE6;"><strong>Regenerates the screenshots</strong> from the live app.</p></div>
+        <div style="display:flex;gap:18px;align-items:baseline;border-top:2px solid rgba(62,36,24,0.32);padding-top:16px;"><span style="font-family:'JetBrains Mono',monospace;font-size:22px;color:#3E2418;font-weight:700;">05</span><p style="margin:0;font-size:29px;line-height:1.3;color:#FBEFE6;"><strong>Refreshes the marketing homepage</strong> &mdash; new plugins, feature claims.</p></div>
+        <div style="display:flex;gap:18px;align-items:baseline;border-top:2px solid rgba(62,36,24,0.32);padding-top:16px;"><span style="font-family:'JetBrains Mono',monospace;font-size:22px;color:#3E2418;font-weight:700;">06</span><p style="margin:0;font-size:29px;line-height:1.3;color:#FBEFE6;"><strong>Deploys it, purges cache, verifies</strong> it's live.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 20 · TAKEAWAYS -->
+  <section class="slide" data-screen-label="20 Takeaways" style="background:#21201C;color:#F2ECE1;font-family:'Hanken Grotesk',sans-serif;padding:100px 128px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.18em;text-transform:uppercase;color:#CC785C;font-weight:500;">20 &nbsp;·&nbsp; Takeaways</div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+      <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:110px;line-height:1.0;letter-spacing:-0.025em;margin:0 0 52px;">The code is cheap now.<br><em style="font-style:italic;color:#CC785C;">The direction is the craft.</em></h2>
+      <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:20px;font-size:31px;line-height:1.35;color:#C7C0B2;max-width:1400px;">
+        <li style="display:flex;gap:18px;"><span style="color:#CC785C;font-weight:700;">•</span><span>WordPress is the perfect target: plugins, tables, REST, CLI, all buildable in a conversation.</span></li>
+        <li style="display:flex;gap:18px;"><span style="color:#CC785C;font-weight:700;">•</span><span>Design in Claude, build in Claude Code, run it on real WordPress.</span></li>
+        <li style="display:flex;gap:18px;"><span style="color:#CC785C;font-weight:700;">•</span><span>You already have the skills to steer. Start with one small idea.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 21 · Q&A -->
+  <section class="slide" data-screen-label="21 Q&A" style="background:#CC785C;color:#FBF4EC;font-family:'Hanken Grotesk',sans-serif;padding:104px 128px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.18em;text-transform:uppercase;color:#3E2418;font-weight:600;">21 &nbsp;·&nbsp; Q&amp;A + demo</div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+      <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:132px;line-height:0.98;letter-spacing:-0.025em;margin:0 0 28px;">Questions &amp; a live look.</h2>
+      <p style="font-size:36px;color:#FBEFE6;margin:0;max-width:1300px;line-height:1.35;">Discussion, and a live look at any of the three: League Report, Dismissed.FYI, or Rutter.</p>
+    </div>
+    <div style="display:flex;gap:44px;font-family:'JetBrains Mono',monospace;font-size:26px;color:#3E2418;border-top:2px solid rgba(62,36,24,0.35);padding-top:26px;">
+      <span>league.report</span><span>dismissed.fyi</span><span>rutter.run</span>
+      <span style="margin-left:auto;color:#FBEFE6;">Austin Ginder · Anchor Hosting</span>
+    </div>
+  </section>
+
+</div>
+</div>
+
+<div id="notes"><div class="label">Presenter notes</div><div id="notesBody"></div></div>
+
+<script>
+(function () {
+  var deck = document.getElementById('deck');
+  var slides = Array.prototype.slice.call(deck.querySelectorAll('section.slide'));
+  var progress = document.getElementById('progress');
+  var slideNumber = document.getElementById('slideNumber');
+  var notes = document.getElementById('notes');
+  var notesBody = document.getElementById('notesBody');
+  var i = 0;
+
+  // Speaker notes, one entry per slide (brief cues drawn from the outline).
+  var NOTES = [
+    "Open warm. I run Anchor Hosting mostly solo. Tonight is what I actually shipped this spring, not theory.",
+    "Developer first, one laptop since 2012. Since February I build almost everything with Claude Code.",
+    "The thesis. Say it plainly and let it sit: with AI the code isn't the valuable artifact anymore, the direction is. Everything tonight comes back to this.",
+    "Ground it: a conversation doesn't end in a chatbot answer, it ends in a running WordPress site. Real plugins, tables, REST, CLI. Your existing WP skills are the steering wheel.",
+    "Make the thesis concrete. Read the direction on screen out loud: it's two sentences. From that, Claude can build for 30-60 minutes on its own. The whole skill is naming the architecture, the keywords 'custom theme,' 'custom plugin,' 'custom database table.' A little direction, a lot of very complicated programming. Landing page is quick; a custom engine runs longer but takes no more steering.",
+    "The spine of the talk. Walk the five steps once here; each project is an instance of this pipeline. This very deck came through steps 1-2.",
+    "Project 1 divider. Set the stakes: a real client platform (LeagueLineup/Stack Sports) was shutting down and years of league history were about to vanish.",
+    "What got built. Land the inline-editing point for non-technical commissioners, and the 3,045-league import. Fun beat: Claude named the project.",
+    "What it took. 92 days, 30 sessions, 561 turns. Use the 'Bah, I think it was better before, can we revert?' quote to show this is real human steering, not one-shot magic.",
+    "Project 2 divider. Lighter tone. A public hall of shame for admin-notice spam, ranked by intent.",
+    "Design-to-code story, matches the meetup pitch exactly: designed in Claude in a morning, then the WP build is a direct port. Code comments literally mirror the design's data.js.",
+    "The clever engineering for a technical crowd: it reflects into plugin code with PHP Reflection to pin file:line, not HTML scraping. Severity = how much of wp-admin it hijacks.",
+    "The responsible-building beat. Be honest: an early version leaked a real customer's account name; that forced a hard pivot to local sandboxes. The agent does what you steer, the responsibility stays yours.",
+    "Project 3 divider. This one restates the thesis as a product: Rutter shares the flow, not the code. A rutter is a sailor's book of directions.",
+    "The payoff: conceived and built in a single evening, one 22-turn session. Design as .dc.html, imported over the design MCP, built into a theme + plugin. Dogfooded on its own build data.",
+    "Zoom out. Same workflow, wildly different scope: 92 days, 28 days, one evening. 'Build anything' really does mean anything.",
+    "Breadth without depth. These all came through the same pipeline. Don't read every card, just gesture at the range.",
+    "Tips. Don't read all nine, pick the 3-4 that land with this room. Design-first, local-first, and browser-verify are the highest value.",
+    "The payoff of 'write a skill per project.' Minn Admin's /dev-minn-admin skill holds the whole runbook, so I just type 'cut a release.' It runs the Playwright suite, bumps versions, publishes the GitHub release, regenerates the marketing screenshots from the live app, refreshes the homepage copy, deploys the landing site, and verifies it's live. Direction once, automation forever. This is what steering compounds into.",
+    "Bring it home to the thesis: the code is cheap, the direction is the craft. Encourage them to start with one small idea.",
+    "Q&A and offer a live look at any of the three. Have league.report / dismissed.fyi / rutter.run open in tabs."
+  ];
+
+  function scale() {
+    var s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    var x = (window.innerWidth - 1920 * s) / 2;
+    var y = (window.innerHeight - 1080 * s) / 2;
+    deck.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + s + ')';
+  }
+
+  function render() {
+    slides.forEach(function (s, idx) { s.classList.toggle('active', idx === i); });
+    progress.style.width = ((i + 1) / slides.length * 100) + '%';
+    slideNumber.textContent = (i + 1) + ' / ' + slides.length;
+    notesBody.textContent = NOTES[i] || '—';
+  }
+
+  function go(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    if (history.replaceState) { history.replaceState(null, '', '#' + (i + 1)); }
+    render();
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { go(i + 1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { go(i - 1); e.preventDefault(); }
+    else if (e.key === 'Home') { go(0); }
+    else if (e.key === 'End') { go(slides.length - 1); }
+    else if (e.key === 'n' || e.key === 'N') { notes.classList.toggle('show'); }
+    else if (e.key === 'f' || e.key === 'F') {
+      if (!document.fullscreenElement) { document.documentElement.requestFullscreen(); }
+      else { document.exitFullscreen(); }
+    }
+  });
+
+  window.addEventListener('resize', scale);
+  var startAt = parseInt((location.hash || '').replace('#', ''), 10);
+  if (!isNaN(startAt)) { i = Math.max(0, Math.min(slides.length - 1, startAt - 1)); }
+  scale();
+  render();
+})();
+</script>
+
+</body>
+</html>
