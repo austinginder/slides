@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My accidental introduction to cybersecurity via AI — Tech Lancaster Meetup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; height:100%; background:#0A1622; overflow:hidden; }
+  *, *::before, *::after { box-sizing:border-box; }
+
+  #viewport { position:fixed; inset:0; overflow:hidden; background:#0A1622; }
+  #deck { position:absolute; left:0; top:0; width:1920px; height:1080px; transform-origin:0 0; will-change:transform; }
+
+  section.slide { position:absolute; top:0; left:0; width:1920px; height:1080px; color:#EBF1F7; font-family:'IBM Plex Sans',sans-serif; }
+  section.slide:not(.active) { display:none !important; }
+
+  .kicker { font-family:'IBM Plex Mono',monospace; font-size:24px; letter-spacing:0.26em; text-transform:uppercase; color:#E0A458; margin-bottom:26px; }
+
+  .progress { position:fixed; top:0; left:0; height:4px; background:linear-gradient(90deg,#E0A458,#5FB8A6); transition:width .4s ease; z-index:50; }
+  .slide-number { position:fixed; bottom:20px; right:28px; color:#4E6275; font-size:15px; font-family:'IBM Plex Mono',monospace; letter-spacing:.08em; z-index:50; }
+  .nav-hint { position:fixed; bottom:20px; left:28px; color:#33485c; font-size:13px; font-family:'IBM Plex Mono',monospace; z-index:50; }
+
+  #notes { position:fixed; left:0; right:0; bottom:0; max-height:38vh; overflow:auto; padding:22px 32px;
+           background:rgba(7,16,26,.96); border-top:1px solid rgba(224,164,88,.3); color:#B9CAD8;
+           font-family:'IBM Plex Sans',sans-serif; font-size:18px; line-height:1.5; z-index:60; display:none; }
+  #notes.show { display:block; }
+  #notes .label { font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:#E0A458; margin-bottom:10px; }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="slide-number" id="slideNumber"></div>
+<div class="nav-hint">← → navigate · N notes · F fullscreen</div>
+
+<div id="viewport">
+<div id="deck">
+
+  <!-- 1 TITLE -->
+  <section class="slide active" data-screen-label="Title" data-speaker-notes="I'm Austin Ginder. I run Anchor Hosting. I also run the WordPress meetup here in Lancaster. This year I accidentally started a cybersecurity side business. That's the talk. A huge string of events landed me in large WordPress bounties, and I want to walk through what I learned, including what I call my AI security pipeline." style="background:#0A1622; display:flex; flex-direction:column; justify-content:space-between; padding:96px 110px; overflow:hidden;">
+    <div style="position:absolute; right:-180px; bottom:-180px; width:680px; height:680px; border:1px solid rgba(224,164,88,0.16); border-radius:50%;"></div>
+    <div style="position:absolute; right:-60px; bottom:-60px; width:440px; height:440px; border:1px solid rgba(224,164,88,0.12); border-radius:50%;"></div>
+    <div style="position:absolute; right:155px; bottom:155px; width:230px; height:230px; border:1px solid rgba(95,184,166,0.18); border-radius:50%;"></div>
+    <div style="position:absolute; right:268px; bottom:50px; width:1px; height:440px; background:rgba(224,164,88,0.14);"></div>
+    <div style="position:absolute; right:50px; bottom:268px; width:440px; height:1px; background:rgba(224,164,88,0.14);"></div>
+
+    <div style="display:flex; justify-content:space-between; align-items:center; font-family:'IBM Plex Mono',monospace; font-size:24px; letter-spacing:0.26em; text-transform:uppercase; color:#8AA0B2;">
+      <span style="color:#E0A458;">Austin Ginder &nbsp;·&nbsp; Anchor Hosting</span>
+      <span>Tech Lancaster Meetup</span>
+    </div>
+
+    <div style="max-width:1540px;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:26px; letter-spacing:0.28em; text-transform:uppercase; color:#5FB8A6; margin-bottom:34px;">Thursday, August 27, 2026 &nbsp;·&nbsp; West Art</div>
+      <h1 style="margin:0; font-weight:600; font-size:92px; line-height:1.02; letter-spacing:-0.025em; color:#EBF1F7;">
+        <span style="display:block;">My accidental introduction</span>
+        <span style="display:block;">to cybersecurity via <span style="color:#E0A458; font-style:italic; font-weight:500;">AI</span></span>
+      </h1>
+    </div>
+
+    <div style="display:flex; align-items:flex-end; gap:28px; max-width:1280px;">
+      <div style="width:64px; height:2px; background:#E0A458; margin-bottom:18px; flex:none;"></div>
+      <p style="margin:0; font-size:32px; line-height:1.45; color:#B9CAD8;">A host. A WordPress meetup. A side business I did not plan.</p>
+    </div>
+  </section>
+
+  <!-- 2 NOT THE EXPERT -->
+  <section class="slide" data-screen-label="Not the expert" data-speaker-notes="Say this out loud. I am not a cybersecurity expert. There are probably people in this room who know more about security than I do. What I had was a huge string of events that landed me in some very large bounties in the WordPress space. I want to show you what I learned, and a little of what I call my AI security pipeline." style="background:#0E1B29; display:flex; flex-direction:column; justify-content:center; padding:96px 110px; overflow:hidden;">
+    <div class="kicker">Hello</div>
+    <h2 style="margin:0 0 40px; font-weight:600; font-size:78px; line-height:1.08; letter-spacing:-0.02em;">I am not a cybersecurity expert.</h2>
+    <p style="margin:0 0 56px; font-size:36px; line-height:1.45; color:#B9CAD8; max-width:1480px;">There are probably people in this room who know more about it than I do.</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:48px;">
+      <div style="border-top:2px solid #E0A458; padding-top:28px;">
+        <h3 style="margin:0 0 14px; font-weight:600; font-size:34px;">Anchor Hosting</h3>
+        <p style="margin:0; font-size:28px; line-height:1.4; color:#9FB3C4;">I keep WordPress sites online. That's the day job.</p>
+      </div>
+      <div style="border-top:2px solid #E0A458; padding-top:28px;">
+        <h3 style="margin:0 0 14px; font-weight:600; font-size:34px;">WordPress Lancaster</h3>
+        <p style="margin:0; font-size:28px; line-height:1.4; color:#9FB3C4;">I run the local meetup. Come on out.</p>
+      </div>
+      <div style="border-top:2px solid #5FB8A6; padding-top:28px;">
+        <h3 style="margin:0 0 14px; font-weight:600; font-size:34px; color:#5FB8A6;">Then this year</h3>
+        <p style="margin:0; font-size:28px; line-height:1.4; color:#D5E1EC;">A string of events. Large bounties. An accidental side business.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 FEBRUARY -->
+  <section class="slide" data-screen-label="February" data-speaker-notes="I started using Claude Code in February. Huge unlock. The problem was, at the same time, hackers were using Claude Code and other tools to find vulnerabilities. I run WordPress hosting. Beginning of February I had the largest number of sites getting compromised I have ever seen. I am very familiar with cleanup. Normally a site moves to me, I clean it, and it stays clean because I run a tight ship. Updates. Proactive. February was an explosion. New customers. Previous customers. Sites just getting hacked." style="background:#0A1622; display:flex; flex-direction:column; justify-content:center; padding:96px 110px; overflow:hidden;">
+    <div class="kicker">February</div>
+    <h2 style="margin:0 0 22px; font-weight:600; font-size:72px; line-height:1.08; letter-spacing:-0.02em;">Claude Code unlocked me.<br>It unlocked the attackers too.</h2>
+    <p style="margin:0 0 56px; font-size:34px; line-height:1.45; color:#B9CAD8; max-width:1500px;">Same month. Same tools. The most compromised sites I have ever had.</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:80px;">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:24px; letter-spacing:0.16em; text-transform:uppercase; color:#8AA0B2; margin-bottom:28px;">How it used to work</div>
+        <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:22px; font-size:32px; line-height:1.4; color:#9FB3C4;">
+          <li>Site moves over. I clean it.</li>
+          <li>Backdoors out. Updates on.</li>
+          <li>Tight ship. They stay clean.</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:24px; letter-spacing:0.16em; text-transform:uppercase; color:#E0645A; margin-bottom:28px;">What February looked like</div>
+        <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:22px; font-size:32px; line-height:1.4; color:#D5E1EC;">
+          <li>New customers. Previous customers.</li>
+          <li>An explosion of hacks.</li>
+          <li>The old playbook could not keep up.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 ROOT CAUSE -->
+  <section class="slide" data-screen-label="Root cause" data-speaker-notes="That's when I discovered AI has an amazing ability to run a security audit. When a hack happens, give it the server. Access logs. The file system. Tell it: run an audit. It has virtually limitless capability getting to the root cause. Sometimes a compromised user account. Sometimes a plugin vulnerability. Sometimes a vulnerability nobody had disclosed. Brand new discoveries. A few of them were plugins sitting in the public WordPress repository." style="background:#0E1B29; display:flex; flex-direction:column; justify-content:center; padding:96px 110px; overflow:hidden;">
+    <div class="kicker">February</div>
+    <h2 style="margin:0 0 28px; font-weight:600; font-size:72px; line-height:1.08; letter-spacing:-0.02em;">Give it the server.<br>It finds the root.</h2>
+    <p style="margin:0 0 56px; font-size:34px; line-height:1.45; color:#E0A458; max-width:1480px;">Access logs. File system. 'Run a security audit.' Virtually limitless at getting to the cause.</p>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:48px;">
+      <div style="border-top:2px solid #5FB8A6; padding-top:28px;">
+        <h3 style="margin:0 0 14px; font-weight:600; font-size:34px;">A stolen account</h3>
+        <p style="margin:0; font-size:28px; line-height:1.4; color:#9FB3C4;">Sometimes that's all it was.</p>
+      </div>
+      <div style="border-top:2px solid #5FB8A6; padding-top:28px;">
+        <h3 style="margin:0 0 14px; font-weight:600; font-size:34px;">A known plugin bug</h3>
+        <p style="margin:0; font-size:28px; line-height:1.4; color:#9FB3C4;">Something that should have been patched.</p>
+      </div>
+      <div style="border-top:2px solid #E0A458; padding-top:28px;">
+        <h3 style="margin:0 0 14px; font-weight:600; font-size:34px;">Something nobody disclosed</h3>
+        <p style="margin:0; font-size:28px; line-height:1.4; color:#D5E1EC;">Including plugins from the public WordPress repository.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 APRIL -->
+  <section class="slide" data-screen-label="April" data-speaker-notes="April, major discoveries. I uncovered three big supply-chain attacks on WordPress. Old plugins, taken off the repository once I reported them. I'd report another issue I found on a customer, they'd take that one down too. Some of this was malware cleanup. Some was hunting modified code on customer sites. Some was hunting the WordPress repository itself. I was not trying to make big discoveries. I made a huge amount of news anyway. That threw me into bug bounties." style="background:#0A1622; display:flex; flex-direction:column; justify-content:center; padding:96px 110px; overflow:hidden;">
+    <div class="kicker">April</div>
+    <h2 style="margin:0 0 22px; font-weight:600; font-size:72px; line-height:1.08; letter-spacing:-0.02em;">I wasn't hunting headlines.<br>I made a bunch of news anyway.</h2>
+    <p style="margin:0 0 56px; font-size:34px; line-height:1.45; color:#B9CAD8; max-width:1500px;">Three big supply-chain attacks. Report, they take it down. Report another. They take that down too.</p>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:48px;">
+      <div style="border-top:2px solid #E0A458; padding-top:28px;">
+        <h3 style="margin:0 0 14px; font-weight:600; font-size:34px;">Cleanup</h3>
+        <p style="margin:0; font-size:28px; line-height:1.4; color:#9FB3C4;">Malware on a customer site. Follow the thread.</p>
+      </div>
+      <div style="border-top:2px solid #E0A458; padding-top:28px;">
+        <h3 style="margin:0 0 14px; font-weight:600; font-size:34px;">Modified code</h3>
+        <p style="margin:0; font-size:28px; line-height:1.4; color:#9FB3C4;">Hunting for hidden changes inside the fleet.</p>
+      </div>
+      <div style="border-top:2px solid #E0A458; padding-top:28px;">
+        <h3 style="margin:0 0 14px; font-weight:600; font-size:34px;">The repository</h3>
+        <p style="margin:0; font-size:28px; line-height:1.4; color:#9FB3C4;">Then hunting WordPress.org itself.</p>
+      </div>
+    </div>
+    <p style="margin:52px 0 0; font-size:34px; line-height:1.4; color:#EBF1F7; font-style:italic;">That's how I got thrown into bug bounties.</p>
+  </section>
+
+  <!-- 6 DILUTED -->
+  <section class="slide" data-screen-label="Diluted" data-speaker-notes="First main takeaway. A lot of what people experience with AI is a diluted version of what it can actually do. If you're going to hunt for bugs, there is a filtered-down version and an unfiltered, unlocked version. A lot of the time that is as simple as applying for their cybersecurity program. ChatGPT has one. Anthropic has one. They're usually pretty restrictive. AI is really good at finding bugs. If you want bugs you can report, you have to prove the findings. The diluted version does not want to prove it, because that involves creating an exploit. The full circle, find and validate, needs the cybersecurity version." style="background:#0E1B29; display:flex; flex-direction:column; justify-content:center; padding:96px 110px; overflow:hidden;">
+    <div class="kicker">Unlocked</div>
+    <h2 style="margin:0 0 22px; font-weight:600; font-size:70px; line-height:1.08; letter-spacing:-0.02em;">Most people are using a diluted version of AI.</h2>
+    <p style="margin:0 0 56px; font-size:34px; line-height:1.45; color:#B9CAD8; max-width:1500px;">Finding a bug is one thing. Proving it means an exploit. Filtered AI does not want to go there.</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:80px;">
+      <div style="border:1px solid rgba(138,160,178,0.28); border-radius:16px; padding:40px 36px;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:24px; letter-spacing:0.16em; text-transform:uppercase; color:#8AA0B2; margin-bottom:22px;">Filtered</div>
+        <h3 style="margin:0 0 18px; font-weight:600; font-size:40px;">Finds the bug</h3>
+        <p style="margin:0; font-size:30px; line-height:1.45; color:#9FB3C4;">Great at reading code. Stops short of building the proof. That's the version most people have.</p>
+      </div>
+      <div style="border:1px solid rgba(224,164,88,0.5); border-radius:16px; padding:40px 36px; background:rgba(224,164,88,0.07);">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:24px; letter-spacing:0.16em; text-transform:uppercase; color:#E0A458; margin-bottom:22px;">Cyber program</div>
+        <h3 style="margin:0 0 18px; font-weight:600; font-size:40px;">Proves the bug</h3>
+        <p style="margin:0; font-size:30px; line-height:1.45; color:#D5E1EC;">ChatGPT has one. Anthropic has one. Apply. Restrictive. Night and day once you're in.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 NIGHT AND DAY -->
+  <section class="slide" data-screen-label="Night and day" data-speaker-notes="I lucked out. I applied to Anthropic's cybersecurity program. They saw the WordPress ecosystem work and the supply-chain attacks. They accepted me. First week I had access, night and day difference in its ability to find security issues. Then I started hunting in my own customer base. Highest impact add-ons. Widest range. And I turned it into a system so I wouldn't waste tokens." style="background:#0A1622; display:flex; flex-direction:column; justify-content:center; padding:96px 110px; overflow:hidden;">
+    <div class="kicker">Unlocked</div>
+    <h2 style="margin:0 0 28px; font-weight:600; font-size:72px; line-height:1.08; letter-spacing:-0.02em;">I applied. They saw the WordPress work.<br>Night and day.</h2>
+    <p style="margin:0 0 56px; font-size:34px; line-height:1.45; color:#B9CAD8; max-width:1480px;">Anthropic's cyber program. First week of access, a different model for finding issues.</p>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:48px;">
+      <div style="border-top:2px solid #5FB8A6; padding-top:28px;">
+        <h3 style="margin:0 0 14px; font-weight:600; font-size:34px;">Start at home</h3>
+        <p style="margin:0; font-size:28px; line-height:1.4; color:#9FB3C4;">My own customer base. Highest-impact add-ons. Widest range.</p>
+      </div>
+      <div style="border-top:2px solid #5FB8A6; padding-top:28px;">
+        <h3 style="margin:0 0 14px; font-weight:600; font-size:34px;">Don't rescan</h3>
+        <p style="margin:0; font-size:28px; line-height:1.4; color:#9FB3C4;">Those tokens are spent. Make it a game: latest version, unique build, once.</p>
+      </div>
+      <div style="border-top:2px solid #E0A458; padding-top:28px;">
+        <h3 style="margin:0 0 14px; font-weight:600; font-size:34px;">One Max plan</h3>
+        <p style="margin:0; font-size:28px; line-height:1.4; color:#D5E1EC;">$200 a month. Roughly a thousand plugins a week, even with other work on the same account.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 THE GAME -->
+  <section class="slide" data-screen-label="The game" data-speaker-notes="The system: only scan the latest versions. Only scan once per unique version of the codebase. That cuts the wasted tokens. Context: a single $200 a month Claude Max account. At this scale I can scan roughly a thousand WordPress plugins a week. If I'm doing other stuff on the account, a little less. I started finding so much I couldn't keep emailing plugin developers. Overwhelming. So I sent them to the bug bounty programs. WordPress has two big ones: Patchstack and Wordfence. I didn't know what I was doing. Patchstack has monthly rewards, so June went to Patchstack. July I tried Wordfence. Patchstack paid. Then they tightened the program. The money I made in June would have been zero the next month. These programs are getting slaughtered by AI submissions." style="background:#0E1B29; display:flex; flex-direction:column; justify-content:center; padding:96px 110px; overflow:hidden;">
+    <div class="kicker">Pipeline</div>
+    <h2 style="margin:0 0 18px; font-weight:600; font-size:70px; line-height:1.08; letter-spacing:-0.02em;">I turned it into a game so I wouldn't waste tokens.</h2>
+    <p style="margin:0 0 48px; font-size:32px; line-height:1.4; color:#B9CAD8; max-width:1500px;">Latest versions only. Unique builds only. Scan once. Then I was finding too much to email vendors.</p>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:40px;">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-weight:500; font-size:72px; line-height:1; color:#E0A458;">$200</div>
+        <div style="margin-top:14px; font-size:26px; line-height:1.3; color:#9FB3C4;">Claude Max, one account</div>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-weight:500; font-size:72px; line-height:1; color:#EBF1F7;">~1,000</div>
+        <div style="margin-top:14px; font-size:26px; line-height:1.3; color:#9FB3C4;">Plugins a week</div>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-weight:500; font-size:72px; line-height:1; color:#EBF1F7;">2</div>
+        <div style="margin-top:14px; font-size:26px; line-height:1.3; color:#9FB3C4;">Bounty programs. Patchstack, Wordfence.</div>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-weight:500; font-size:72px; line-height:1; color:#5FB8A6;">June</div>
+        <div style="margin-top:14px; font-size:26px; line-height:1.3; color:#9FB3C4;">Paid. Next month the rules tightened.</div>
+      </div>
+    </div>
+    <p style="margin:48px 0 0; font-size:32px; line-height:1.4; color:#9FB3C4; font-style:italic;">Bug bounty programs are getting slaughtered by AI submissions. So what actually makes a submission real?</p>
+  </section>
+
+  <!-- 9 FINDING VS VALIDATION -->
+  <section class="slide" data-screen-label="Noise" data-speaker-notes="A lot of what AI finds is noise. If you search your codebase with AI, it will oftentimes create noise. A security finding is just that. A finding. It is not confirmed. It is not a validation. If you want to prove it, you have to tell the AI to prove it." style="background:#0A1622; display:flex; flex-direction:column; justify-content:center; padding:96px 110px; overflow:hidden;">
+    <div class="kicker">Prove</div>
+    <h2 style="margin:0 0 36px; font-weight:600; font-size:78px; line-height:1.08; letter-spacing:-0.02em;">A finding is not a validation.</h2>
+    <p style="margin:0 0 64px; font-size:36px; line-height:1.45; color:#B9CAD8; max-width:1480px;">AI will create noise. If you want to prove it, you have to tell it to prove it.</p>
+    <div style="display:grid; grid-template-columns:1fr auto 1fr; gap:40px; align-items:center;">
+      <div style="border:1px solid rgba(138,160,178,0.28); border-radius:16px; padding:40px 36px;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:22px; letter-spacing:0.16em; text-transform:uppercase; color:#8AA0B2; margin-bottom:16px;">Finding</div>
+        <p style="margin:0; font-size:32px; line-height:1.4; color:#D5E1EC;">Looks exploitable in the source. Could be nothing.</p>
+      </div>
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:48px; color:#E0A458;">→</div>
+      <div style="border:1px solid rgba(224,164,88,0.5); border-radius:16px; padding:40px 36px; background:rgba(224,164,88,0.07);">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:22px; letter-spacing:0.16em; text-transform:uppercase; color:#E0A458; margin-bottom:16px;">Validation</div>
+        <p style="margin:0; font-size:32px; line-height:1.4; color:#EBF1F7;">It fired. Or it didn't. Now you know.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 AI TO PROVE AI -->
+  <section class="slide" data-screen-label="AI to prove AI" data-speaker-notes="That's what I did. Okay Claude, look through this codebase, find all the security bugs. Great. Now Claude, spin up a local WordPress site and prove them, or disprove them. It spins up WordPress on my laptop and settles in on what is actually exploitable. Here's the unlock with the cyber program: you can have it create the proof of concept. A walkthrough. You run this command, you get this. You run this command, you get that. You run this command, you have access you shouldn't have. Use AI to prove AI. Anyone with a project should start here. Ask it to audit your stuff. Latest ChatGPT. Latest Anthropic, Opus 5. Then ask it to fix it. What it finds, it can fix." style="background:#0E1B29; display:flex; flex-direction:column; justify-content:center; padding:96px 110px; overflow:hidden;">
+    <div class="kicker">Prove</div>
+    <h2 style="margin:0 0 22px; font-weight:600; font-size:72px; line-height:1.08; letter-spacing:-0.02em;">Use AI to prove AI.</h2>
+    <p style="margin:0 0 48px; font-size:34px; line-height:1.45; color:#E0A458; max-width:1480px;">Find the bugs. Then spin up a real environment and make it fire. Or kill the claim.</p>
+    <div style="border:1px solid rgba(95,184,166,0.3); border-radius:12px; background:#07101A; padding:36px 40px; font-size:30px; line-height:1.55; color:#D5E1EC; margin-bottom:40px;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:22px; letter-spacing:0.14em; text-transform:uppercase; color:#5FB8A6; margin-bottom:20px;">The loop</div>
+      <p style="margin:0 0 12px;"><span style="color:#E0A458;">1.</span> Look through this codebase. Find the security bugs.</p>
+      <p style="margin:0 0 12px;"><span style="color:#E0A458;">2.</span> Spin up a local site. Prove them, or disprove them.</p>
+      <p style="margin:0;"><span style="color:#E0A458;">3.</span> Write the walkthrough. This command, then this, then you have access you shouldn't.</p>
+    </div>
+    <p style="margin:0; font-size:32px; line-height:1.4; color:#EBF1F7;">Anyone with a project should start here. Audit it. Then ask it to fix what it finds.</p>
+  </section>
+
+  <!-- 11 CORE CORNERSTONE -->
+  <section class="slide" data-screen-label="Core" data-speaker-notes="Back to the story. End of July, the holy grail of WordPress news. A researcher used AI to chain a bunch of low findings into a critical. Unauthorized takeover of any WordPress site. WordPress is a huge chunk of the web. This exploit meant you could get into 40 percent of all websites. Just as a visitor. Run some commands. Gain access to the backend. Crazy absurd." style="background:#0A1622; display:flex; flex-direction:column; justify-content:center; padding:96px 110px; overflow:hidden;">
+    <div class="kicker">Core</div>
+    <h2 style="margin:0 0 22px; font-weight:600; font-size:70px; line-height:1.08; letter-spacing:-0.02em;">Then someone chained the lows<br>into the holy grail.</h2>
+    <p style="margin:0 0 56px; font-size:34px; line-height:1.45; color:#B9CAD8; max-width:1500px;">End of July. Unauthenticated takeover of WordPress core. No plugin required.</p>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:48px;">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-weight:500; font-size:80px; line-height:1; color:#E0645A;">40%</div>
+        <div style="margin-top:16px; font-size:28px; line-height:1.3; color:#9FB3C4;">of websites, in reach of a visitor</div>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-weight:500; font-size:80px; line-height:1; color:#E0A458;">Low → critical</div>
+        <div style="margin-top:16px; font-size:28px; line-height:1.3; color:#9FB3C4;">A chain of small findings, not one loud bug</div>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-weight:500; font-size:80px; line-height:1; color:#EBF1F7;">AI</div>
+        <div style="margin-top:16px; font-size:28px; line-height:1.3; color:#9FB3C4;">That's how they found it</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 COULDN'T REPRODUCE -->
+  <section class="slide" data-screen-label="Couldn't reproduce" data-speaker-notes="I had personally scanned WordPress core. I didn't find anything. I even fed the security notice into my cybersecurity AI, which is super smart. It couldn't reproduce it. It had no idea what was going on. Then I cheated. I fed it the publicly disclosed exploit. Then I could recreate it. My feeling was: this is a really smart cybersecurity person combined with crazy AI. No way a person found this on their own. Two or three days later, the researcher posted that exact conclusion. Here's the research. Here's how I used AI." style="background:#0E1B29; display:flex; flex-direction:column; justify-content:center; padding:96px 110px; overflow:hidden;">
+    <div class="kicker">Core</div>
+    <h2 style="margin:0 0 28px; font-weight:600; font-size:70px; line-height:1.08; letter-spacing:-0.02em;">I scanned core. Found nothing.<br>My cyber AI couldn't reproduce it either.</h2>
+    <p style="margin:0 0 52px; font-size:34px; line-height:1.45; color:#B9CAD8; max-width:1480px;">Until I cheated and fed it the published exploit. Then two or three days later, the researcher posted the method.</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:80px;">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:24px; letter-spacing:0.16em; text-transform:uppercase; color:#8AA0B2; margin-bottom:22px;">What I thought</div>
+        <p style="margin:0; font-size:32px; line-height:1.45; color:#D5E1EC;">A really smart security person, combined with crazy AI. No way a person found that alone.</p>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:24px; letter-spacing:0.16em; text-transform:uppercase; color:#E0A458; margin-bottom:22px;">What they published</div>
+        <p style="margin:0; font-size:32px; line-height:1.45; color:#D5E1EC;">GPT Sol, ultra mode. Recursively keep trying. Direct it at unauthorized criticals. Chain the lows until they get worse.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 UP THE ANTE -->
+  <section class="slide" data-screen-label="Up the ante" data-speaker-notes="I was in awe. In the back of my mind: this method is probably going to uncover something equally large on the big plugins. So I tried to reproduce it directly. Bought the ChatGPT Sol subscription. Had it study their research. Got a chaining sort of thing. I got lucky, or unlucky: ChatGPT was doing weekly resets. I would burn an entire week's usage in a day, hit a reset, do it again. In a week I used three or four weeks of usage. I wasn't finding anything. Striking out. A few days later I came back: maybe the problem is I'm searching too many plugins, not spending enough time on one. Sol usage was up. This was the day before Opus 5.0. I spun up Opus 4.8, picked two targets, modified the chaining hunt, deep dives, as many subagents as you need, run as long as you need." style="background:#0A1622; display:flex; flex-direction:column; justify-content:center; padding:96px 110px; overflow:hidden;">
+    <div class="kicker">Ante</div>
+    <h2 style="margin:0 0 22px; font-weight:600; font-size:70px; line-height:1.08; letter-spacing:-0.02em;">I tried to copy it.<br>Burned weeks of Sol. Struck out.</h2>
+    <p style="margin:0 0 52px; font-size:34px; line-height:1.45; color:#B9CAD8; max-width:1500px;">Weekly usage resets. Three or four weeks burned in one week. Searching too many plugins, not enough time on one.</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:80px;">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:24px; letter-spacing:0.16em; text-transform:uppercase; color:#8AA0B2; margin-bottom:22px;">What failed</div>
+        <p style="margin:0; font-size:32px; line-height:1.45; color:#9FB3C4;">Copy the famous hunt. Wander. No target. A chaining sort of thing, nothing that paid.</p>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:24px; letter-spacing:0.16em; text-transform:uppercase; color:#5FB8A6; margin-bottom:22px;">What I changed</div>
+        <p style="margin:0; font-size:32px; line-height:1.45; color:#D5E1EC;">Up the ante. Two big targets. Opus 4.8. Chain hunt plus deep dive. As many subagents as you need. Run as long as you need.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 ELEMENTOR -->
+  <section class="slide" data-screen-label="Elementor" data-speaker-notes="It went off and ran for a couple of hours. A few hours later, a big one came out. Elementor Pro. One of the largest WordPress plugins. Used on 10 million websites. The larger the find, the more they pay out. I submitted it. They accepted it. August 1st, $15,000 in my PayPal for a critical vulnerability in Elementor Pro. Right timing. Right search parameters." style="background:#0E1B29; display:flex; flex-direction:column; justify-content:center; padding:96px 110px; overflow:hidden;">
+    <div class="kicker">Elementor</div>
+    <h2 style="margin:0 0 18px; font-weight:600; font-size:68px; line-height:1.08; letter-spacing:-0.02em;">A couple of hours later, a big one came out.</h2>
+    <p style="margin:0 0 48px; font-size:32px; line-height:1.4; color:#B9CAD8; max-width:1500px;">Elementor Pro. One of the largest WordPress plugins. Day before Opus 5 shipped.</p>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:48px; margin-bottom:48px;">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-weight:500; font-size:72px; line-height:1; color:#E0A458;">$15,000</div>
+        <div style="margin-top:14px; font-size:26px; line-height:1.3; color:#9FB3C4;">In PayPal on August 1st</div>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-weight:500; font-size:72px; line-height:1; color:#EBF1F7;">~hours</div>
+        <div style="margin-top:14px; font-size:26px; line-height:1.3; color:#9FB3C4;">Opus 4.8, two targets, then this</div>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-weight:500; font-size:72px; line-height:1; color:#5FB8A6;">10M</div>
+        <div style="margin-top:14px; font-size:26px; line-height:1.3; color:#9FB3C4;">Sites in that plugin's gravity well</div>
+      </div>
+    </div>
+    <p style="margin:0; font-size:34px; line-height:1.4; color:#EBF1F7; font-style:italic;">Right timing. Right search parameters.</p>
+  </section>
+
+  <!-- 15 RELEASE CYCLE -->
+  <section class="slide" data-screen-label="Release cycle" data-speaker-notes="How to land it. We are in a transition. AI is really good at finding bugs. Everyone writing code, writing applications, should be using AI as part of the release cycle. That's how I treat it now. You're making something, adding features, going to release version 1: before you release version 1, run a big code audit and fix whatever it finds. Releasing 1.1? That's the time to incorporate it into the flow. AI's ability to exploit things is insane. It's not going away. It's not once and done. Find all the bugs, fix all the things, we're good. No. We're still writing code, even when AI writes the code. And just because AI understands vulnerabilities does not mean it has the complete picture. 10,000 line project: it does not have all 10,000 lines in context when it makes the new feature. So it will still create vulnerabilities. Every version needs a check before you release it. If you don't, someone outside will, if it's open source. Or worse, someone finds an exploit in your software and you have no visibility." style="background:#0A1622; display:flex; flex-direction:column; justify-content:center; padding:96px 110px; overflow:hidden;">
+    <div class="kicker">Release</div>
+    <h2 style="margin:0 0 22px; font-weight:600; font-size:70px; line-height:1.08; letter-spacing:-0.02em;">Put the audit in the release cycle.</h2>
+    <p style="margin:0 0 52px; font-size:34px; line-height:1.45; color:#E0A458; max-width:1500px;">Not once. Every version. Before v1. Before 1.1. Before you ship.</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:80px;">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:24px; letter-spacing:0.16em; text-transform:uppercase; color:#8AA0B2; margin-bottom:28px;">What people hope</div>
+        <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:22px; font-size:32px; line-height:1.4; color:#9FB3C4;">
+          <li>AI writes the code, so it's secure</li>
+          <li>One big audit, then we're done</li>
+          <li>The model already knows the whole app</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:24px; letter-spacing:0.16em; text-transform:uppercase; color:#5FB8A6; margin-bottom:28px;">What actually happens</div>
+        <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:22px; font-size:32px; line-height:1.4; color:#D5E1EC;">
+          <li>10,000 lines. Not all in the context window.</li>
+          <li>New features still create holes.</li>
+          <li>If you don't check, someone else will. Or they won't tell you.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16 THANKS -->
+  <section class="slide" data-screen-label="Thanks" data-speaker-notes="That's the talk. Accidental. Diluted vs unlocked. Use AI to prove AI. The WordPress core chain is the cornerstone. Elementor was right timing and the right parameters. If you're building things, security audits and fixes have to be part of the process. Questions welcome." style="background:#0E1B29; display:flex; flex-direction:column; justify-content:space-between; padding:96px 110px; overflow:hidden;">
+    <div style="position:absolute; right:-180px; top:-180px; width:560px; height:560px; border:1px solid rgba(95,184,166,0.16); border-radius:50%;"></div>
+    <div style="position:absolute; right:-40px; top:-40px; width:340px; height:340px; border:1px solid rgba(224,164,88,0.14); border-radius:50%;"></div>
+
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:24px; letter-spacing:0.26em; text-transform:uppercase; color:#5FB8A6;">Questions welcome</div>
+
+    <div>
+      <h2 style="margin:0 0 28px; font-weight:600; font-size:110px; line-height:1; letter-spacing:-0.03em;">Every version.<br>Then ship.</h2>
+      <p style="margin:0; font-size:34px; line-height:1.45; color:#B9CAD8; max-width:1200px;">Audit it. Prove it. Fix it. If you don't, someone outside will.</p>
+    </div>
+
+    <div style="display:flex; gap:80px; font-family:'IBM Plex Mono',monospace;">
+      <div>
+        <div style="font-size:24px; letter-spacing:0.16em; text-transform:uppercase; color:#8AA0B2; margin-bottom:12px;">Site</div>
+        <div style="font-size:32px; color:#E0A458;">austinginder.com</div>
+      </div>
+      <div>
+        <div style="font-size:24px; letter-spacing:0.16em; text-transform:uppercase; color:#8AA0B2; margin-bottom:12px;">Write-ups</div>
+        <div style="font-size:32px; color:#E0A458;">anchor.host</div>
+      </div>
+      <div>
+        <div style="font-size:24px; letter-spacing:0.16em; text-transform:uppercase; color:#8AA0B2; margin-bottom:12px;">Slides</div>
+        <div style="font-size:32px; color:#E0A458;">github.com/austinginder/slides</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+</div>
+
+<div id="notes"><div class="label" id="notesLabel"></div><div id="notesBody"></div></div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const deck = document.getElementById('deck');
+  const progress = document.getElementById('progress');
+  const slideNumber = document.getElementById('slideNumber');
+  const notes = document.getElementById('notes');
+  const notesLabel = document.getElementById('notesLabel');
+  const notesBody = document.getElementById('notesBody');
+  let current = 0;
+  let notesOn = false;
+
+  (function () {
+    const seen = {};
+    let n = 0;
+    document.querySelectorAll('.kicker').forEach((k) => {
+      const name = k.textContent.trim();
+      if (!(name in seen)) seen[name] = String(++n).padStart(2, '0');
+      k.textContent = seen[name] + ' / ' + name;
+    });
+  })();
+
+  function render() {
+    slides.forEach((s, i) => s.classList.toggle('active', i === current));
+    progress.style.width = ((current + 1) / slides.length * 100) + '%';
+    const active = slides[current];
+    const label = active.dataset.screenLabel || '';
+    const pos = (current + 1) + ' / ' + slides.length;
+    slideNumber.innerHTML = label ? label + '<span style="margin-left:1.8em;">' + pos + '</span>' : pos;
+    notesLabel.textContent = (current + 1) + ' / ' + slides.length + (label ? ' · ' + label : '');
+    notesBody.textContent = active.dataset.speakerNotes || '';
+    location.hash = current + 1;
+  }
+
+  function go(n) { current = Math.max(0, Math.min(slides.length - 1, n)); render(); }
+
+  function fit() {
+    const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    const x = (window.innerWidth - 1920 * s) / 2;
+    const y = (window.innerHeight - 1080 * s) / 2;
+    deck.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + s + ')';
+  }
+  window.addEventListener('resize', fit);
+  window.addEventListener('orientationchange', fit);
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); go(current + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(current - 1); }
+    else if (e.key === 'Home') go(0);
+    else if (e.key === 'End') go(slides.length - 1);
+    else if (e.key === 'n' || e.key === 'N') { notesOn = !notesOn; notes.classList.toggle('show', notesOn); }
+    else if (e.key === 'f' || e.key === 'F') { if (!document.fullscreenElement) document.documentElement.requestFullscreen(); else document.exitFullscreen(); }
+  });
+
+  const start = parseInt((location.hash || '').replace('#', ''), 10);
+  if (start) current = Math.max(0, Math.min(slides.length - 1, start - 1));
+
+  fit();
+  render();
+</script>
+</body>
+</html>

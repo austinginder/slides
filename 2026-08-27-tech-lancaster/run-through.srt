@@ -1,0 +1,880 @@
+1
+00:00:00,000 --> 00:00:07,220
+ I'm just going to give a run through, brainstorming everything I need for this talk.
+
+2
+00:00:07,220 --> 00:00:11,000
+ And this will help organize the slides and everything thereafter.
+
+3
+00:00:11,000 --> 00:00:18,560
+ So the title of this talk is going to be my Accidental Introduction to Cybersecurity
+
+4
+00:00:18,560 --> 00:00:32,560
+ via AI, and starting off, my name is Austin Ginder and I run Anchor Hosting.
+
+5
+00:00:32,560 --> 00:00:38,460
+ I also run the WordPress meetup group here locally in Lancaster.
+
+6
+00:00:38,460 --> 00:00:42,000
+ So obviously we're going to come on out.
+
+7
+00:00:42,000 --> 00:00:52,320
+ And apparently I am, accidentally got started a cybersecurity side business.
+
+8
+00:00:52,320 --> 00:01:02,640
+ So what do you mean by that is, this year has been crazy with AI.
+
+9
+00:01:02,640 --> 00:01:07,640
+ So I'm going to tell you a little bit of the backstory of how I kind of got thrown into
+
+10
+00:01:07,640 --> 00:01:10,440
+ the cybersecurity world.
+
+11
+00:01:10,440 --> 00:01:16,200
+ I am not a cybersecurity activist, in fact there's probably people in this room that
+
+12
+00:01:16,200 --> 00:01:25,960
+ know more about cybersecurity than myself.
+
+13
+00:01:25,960 --> 00:01:34,440
+ What I had was just a huge string of events that kind of landed me to finding some very
+
+14
+00:01:34,440 --> 00:01:41,520
+ large bounties in WordPress space, and I kind of want to walk through and show you some
+
+15
+00:01:41,520 --> 00:02:02,020
+ of what I've learned, a little bit of what I call my AI security pipeline.
+
+16
+00:02:02,020 --> 00:02:09,000
+ So yeah, starting with my story.
+
+17
+00:02:09,000 --> 00:02:28,080
+ I started in February, Cloud Code was, I started to use Cloud Code in February, and that was
+
+18
+00:02:28,080 --> 00:02:35,320
+ a huge unlock for me, but the problem was at the same time, hackers were using Cloud
+
+19
+00:02:35,320 --> 00:02:40,520
+ Code and other tools to find security vulnerabilities.
+
+20
+00:02:40,520 --> 00:02:54,520
+ So my business is running WordPress hosting, and in the beginning of February, I had the
+
+21
+00:02:54,520 --> 00:02:59,200
+ largest amount of websites getting hacked and compromised.
+
+22
+00:02:59,200 --> 00:03:04,520
+ Now I'm very familiar with cleaning up websites, I've done it for years.
+
+23
+00:03:04,520 --> 00:03:09,240
+ Normally I'm doing a cleanup of a website, if they're moving from a previous web host
+
+24
+00:03:09,240 --> 00:03:18,480
+ over to me, you get the site all cleaned up, remove all the back doors, all the viruses,
+
+25
+00:03:18,480 --> 00:03:23,720
+ and I have a pretty good track record of once they're over onto my platform, they kind of
+
+26
+00:03:23,720 --> 00:03:31,160
+ stay clean because I run a tight ship, so I keep after all the updates, make sure all
+
+27
+00:03:31,160 --> 00:03:37,360
+ the security updates are applied, and I'm very proactive.
+
+28
+00:03:37,360 --> 00:03:47,160
+ Well what happened is, in February, it was just like a huge explosion of new customers,
+
+29
+00:03:47,160 --> 00:03:55,160
+ previous customers, that their sites were just getting hacked, and so around that time
+
+30
+00:03:55,160 --> 00:04:03,520
+ I started to use Cloud Code for the first time, and I discovered AI has an amazing ability
+
+31
+00:04:03,520 --> 00:04:08,480
+ to run an audit, a security audit.
+
+32
+00:04:08,480 --> 00:04:17,920
+ So when a hack happens, if you give AI access to the server, access to the access logs,
+
+33
+00:04:17,920 --> 00:04:27,360
+ the file systems, and you just tell it run an audit, run a security audit, it has virtually
+
+34
+00:04:27,360 --> 00:04:35,320
+ limitless capabilities in getting to the root cause of the issue.
+
+35
+00:04:35,320 --> 00:04:44,760
+ So some of these are just small websites getting hacked, I'm running cleanup using AI, I'm
+
+36
+00:04:44,760 --> 00:04:52,480
+ discovering what the root cause was of the hack, sometimes it was a user account that
+
+37
+00:04:52,480 --> 00:04:57,840
+ was compromised, sometimes it was something more serious, a plugin had a vulnerability
+
+38
+00:04:57,840 --> 00:05:04,880
+ in, sometimes it was a plugin that had a vulnerability that no one disclosed.
+
+39
+00:05:04,880 --> 00:05:14,920
+ This was like brand new discoveries, and a few of them were plugins that were publicly
+
+40
+00:05:14,920 --> 00:05:22,120
+ being distributed from the WordPress repository.
+
+41
+00:05:22,120 --> 00:05:39,560
+ So in April I had some major discoveries, I had uncovered three big supply chain attacks
+
+42
+00:05:39,560 --> 00:05:50,080
+ on WordPress, and these were either old plugins that were taking off the WordPress repository,
+
+43
+00:05:50,080 --> 00:05:54,360
+ once I would report them, they would take them down, I would report another issue that
+
+44
+00:05:54,360 --> 00:05:59,280
+ I found on my customers, and they would take them down.
+
+45
+00:05:59,280 --> 00:06:08,820
+ And this happened a bunch of different ways, some of them were me running malware cleanup,
+
+46
+00:06:08,820 --> 00:06:17,160
+ some of them were me hunting through my customer sites trying to find ways that people were
+
+47
+00:06:17,160 --> 00:06:29,440
+ hiding modified code inside my code base, and yeah, all of that kind of came to me trying
+
+48
+00:06:29,440 --> 00:06:34,920
+ to build some tools to try to find some things, and I was able to find some things myself
+
+49
+00:06:34,920 --> 00:06:50,040
+ by just hunting the WordPress repository, and all the time, I wasn't trying to do big
+
+50
+00:06:50,040 --> 00:06:59,840
+ discoveries but I made a huge amount of news, and kind of threw me into the world of bug
+
+51
+00:06:59,840 --> 00:07:06,600
+ bounties and hunting for things, so anyway, this is kind of what I've learned over this
+
+52
+00:07:06,600 --> 00:07:09,120
+ timeline.
+
+53
+00:07:09,120 --> 00:07:16,320
+ The first main takeaway that I want to say about this is a lot of what people experience
+
+54
+00:07:16,320 --> 00:07:27,960
+ with AI is a diluted version of what AI can actually do, so the first thing is if you're
+
+55
+00:07:27,960 --> 00:07:36,560
+ going to hunt for bugs, there is a filtered down version of AI, and then there's an unfiltered,
+
+56
+00:07:36,560 --> 00:07:44,640
+ unlocked version of AI, and a lot of the times that is as simple as applying for their cyber
+
+57
+00:07:44,640 --> 00:07:46,640
+ security program.
+
+58
+00:07:46,640 --> 00:07:54,000
+ Now I kind of lucked out early on because of these big discoveries I was finding with
+
+59
+00:07:54,000 --> 00:08:01,900
+ just my regular AI, AI is, I'll kind of break it down two ways, AI is really good about
+
+60
+00:08:01,900 --> 00:08:04,920
+ finding bugs.
+
+61
+00:08:04,920 --> 00:08:11,760
+ Now if you want to find bugs that you can report, you have to prove the findings.
+
+62
+00:08:11,760 --> 00:08:17,840
+ The diluted version of AI does not want to prove it because that involves creating an
+
+63
+00:08:17,840 --> 00:08:19,960
+ exploit.
+
+64
+00:08:19,960 --> 00:08:27,600
+ If you want to do the full circle, where you find security problems and validate them,
+
+65
+00:08:27,600 --> 00:08:33,120
+ that validation step requires the cyber security version.
+
+66
+00:08:33,120 --> 00:08:40,320
+ So chat GPT would have a cyber program, anthropic would have a cyber as a cyber program, and
+
+67
+00:08:40,320 --> 00:08:43,480
+ applying for those programs are usually pretty restrictive.
+
+68
+00:08:43,480 --> 00:08:49,260
+ I sort of lucked out because I applied to anthropic cyber security program.
+
+69
+00:08:49,260 --> 00:08:56,760
+ They saw my work with WordPress and ecosystem and the supply chain tax, they accepted me.
+
+70
+00:08:56,760 --> 00:09:02,440
+ And what they gave me is all of a sudden I discovered the first week I had it, access
+
+71
+00:09:02,440 --> 00:09:11,440
+ to it, it is a night and day difference in its ability to find security issues.
+
+72
+00:09:11,440 --> 00:09:19,800
+ So I started to hunt for bugs, I just started with my own customer base, which add-ons are
+
+73
+00:09:19,800 --> 00:09:26,880
+ the most highest impact, they're used on the widest range, I would scan them, and I turned
+
+74
+00:09:26,880 --> 00:09:32,040
+ it into this complete system, if I'm going to scan for something, I don't want to re-scan
+
+75
+00:09:32,040 --> 00:09:42,480
+ it, we used all those tokens, so I kind of broke it up into a game, like I'm only going
+
+76
+00:09:42,480 --> 00:09:59,720
+ to scan the latest versions of all these plugins, I'm only going to run the, I'm only going
+
+77
+00:09:59,720 --> 00:10:16,540
+ to run the scans once per version, or what I'm going to call unique version of the code
+
+78
+00:10:16,540 --> 00:10:26,160
+ base, and that cuts down how many tokens I'm wasting on this, and just to give you context
+
+79
+00:10:26,160 --> 00:10:31,840
+ this is all with a single $200 a month cloudmax account.
+
+80
+00:10:31,840 --> 00:10:41,880
+ So at this scale, I can actually scan roughly around 1,000 WordPress plugins per week.
+
+81
+00:10:41,880 --> 00:10:49,560
+ If I'm doing other stuff with my cloudmax account, might be a little bit less.
+
+82
+00:10:49,560 --> 00:11:01,240
+ But yeah, around 1,000 and using cloudmax with other stuff, and I started to find stuff,
+
+83
+00:11:01,240 --> 00:11:07,320
+ so I first started to reach out to plugin developers, like hey, I found something, here's
+
+84
+00:11:07,320 --> 00:11:12,400
+ what I found, but then it was overwhelming, I was finding way too much, I couldn't keep
+
+85
+00:11:12,400 --> 00:11:18,360
+ up with it, so I started to send them to the bug bounty programs.
+
+86
+00:11:18,360 --> 00:11:24,160
+ In WordPress, there's two big bug bounty programs, there's Patchjack and there's Wordfence.
+
+87
+00:11:24,160 --> 00:11:30,400
+ I didn't know what I was doing, so I just kind of picked and decided, well, Patchjack
+
+88
+00:11:30,400 --> 00:11:37,080
+ has like a monthly rewards, so if you get so many submissions in a certain month, they'll
+
+89
+00:11:37,080 --> 00:11:43,800
+ give you more money for that, so I decided for the month of June, I'm going to submit
+
+90
+00:11:43,800 --> 00:11:48,760
+ everything through Patchjack, and then I kind of decided for the month of July, I'm just
+
+91
+00:11:48,760 --> 00:11:52,120
+ going to try to submit everything through Wordfence.
+
+92
+00:11:52,120 --> 00:12:00,520
+ So I did that, and Patchjack made some money, they kind of tightened up their program, so
+
+93
+00:12:00,520 --> 00:12:07,240
+ like the money I made in June, I would have made $0 on the next month, because these bug
+
+94
+00:12:07,240 --> 00:12:14,400
+ bounty programs are getting slaughtered by AI submissions.
+
+95
+00:12:14,400 --> 00:12:19,280
+ But what actually makes a submission real?
+
+96
+00:12:19,280 --> 00:12:24,680
+ A lot of what AI finds is noise.
+
+97
+00:12:24,680 --> 00:12:37,440
+ If you search for your codebase using AI, it will just oftentimes create noise, a security
+
+98
+00:12:37,440 --> 00:12:44,820
+ finding is just that, it's a finding, it's not confirmed, it's not a validation.
+
+99
+00:12:44,820 --> 00:12:49,600
+ If you want to prove it, you have to tell the AI to prove it, so that's what I did.
+
+100
+00:12:49,600 --> 00:12:59,240
+ I taught my Claude account, I'm like, okay, Claude, look through this codebase, find all
+
+101
+00:12:59,240 --> 00:13:03,160
+ the security bugs, okay, great, got all these security bugs.
+
+102
+00:13:03,160 --> 00:13:14,040
+ Now Claude, spin up a local WordPress site and prove them, or disprove them, all of these
+
+103
+00:13:14,040 --> 00:13:20,080
+ findings and it will kind of go, so Claude would spin up a WordPress site locally on
+
+104
+00:13:20,080 --> 00:13:21,080
+ my laptop.
+
+105
+00:13:21,080 --> 00:13:29,560
+ And it would go through all the findings and actually settle in on what is exploitable.
+
+106
+00:13:29,560 --> 00:13:33,360
+ And then here's the unlock with the cyber security program, you can actually have it
+
+107
+00:13:33,360 --> 00:13:36,280
+ create the proof of concept.
+
+108
+00:13:36,280 --> 00:13:43,840
+ The proof of concept is just that, it is a walkthrough of here is how someone can exploit
+
+109
+00:13:43,840 --> 00:13:44,840
+ it.
+
+110
+00:13:44,840 --> 00:13:49,320
+ You run this command, it gets you this, you run this command, it gets you that, you run
+
+111
+00:13:49,320 --> 00:13:55,880
+ this command and you have access that you shouldn't have access to.
+
+112
+00:13:55,880 --> 00:14:07,160
+ So anyone can run a security audit and anyone who has a project, you should, that is the
+
+113
+00:14:07,160 --> 00:14:18,580
+ starting point, just like ask AI to run a security audit on your stuff and use the latest versions
+
+114
+00:14:18,580 --> 00:14:32,160
+ of chat GPT, use the latest versions of anthropic, which would be the Opus 5, and then ask it
+
+115
+00:14:32,160 --> 00:14:42,240
+ to fix it, because what it finds, it can fix.
+
+116
+00:14:42,240 --> 00:14:54,360
+ So anyway, back to my story, so finding all these things, and in terms of WordPress news,
+
+117
+00:14:54,360 --> 00:15:10,640
+ the biggest security alert happened in August, in July, at the end of July.
+
+118
+00:15:10,640 --> 00:15:23,240
+ And a security researcher had managed to create the holy grail of WordPress news.
+
+119
+00:15:23,240 --> 00:15:30,900
+ What they were able to do with AI is, they were able to create a very sophisticated exploit
+
+120
+00:15:30,900 --> 00:15:37,320
+ that chained together a whole bunch of these low findings and made them into a critical
+
+121
+00:15:37,320 --> 00:15:38,320
+ finding.
+
+122
+00:15:38,320 --> 00:15:47,640
+ Effectively, it meant someone that was not authorized could take over any WordPress site.
+
+123
+00:15:47,640 --> 00:15:59,080
+ This is crazy, so WordPress is a platform for the web, and what this meant is, with
+
+124
+00:15:59,080 --> 00:16:06,440
+ this exploit, you could get into 40% of all websites.
+
+125
+00:16:06,440 --> 00:16:11,480
+ Just as a visitor, you run some commands and you can gain access to the backend of the
+
+126
+00:16:11,480 --> 00:16:13,880
+ website.
+
+127
+00:16:13,880 --> 00:16:21,800
+ This is crazy absurd, so when I first saw this happen, I was looking through it, I personally
+
+128
+00:16:21,800 --> 00:16:28,920
+ scanned the WordPress core for security vulnerabilities, I didn't find anything.
+
+129
+00:16:28,920 --> 00:16:39,440
+ So I was looking at it, I even fed the security notice into my cybersecurity AI, which is
+
+130
+00:16:39,440 --> 00:16:45,800
+ again, super smart, it couldn't reproduce it, it had no idea what was going on.
+
+131
+00:16:45,800 --> 00:16:51,800
+ And then I cheated and then fed it, the publicly disclosed, here's the exploits, and yeah,
+
+132
+00:16:51,800 --> 00:17:00,000
+ I could recreate the exploits and I could then do something with it.
+
+133
+00:17:00,000 --> 00:17:06,360
+ So this story was wild for a couple of reasons, but I was looking at this, and I was like,
+
+134
+00:17:06,360 --> 00:17:12,700
+ this is like a combination of some really smart cybersecurity person, combined with
+
+135
+00:17:12,700 --> 00:17:21,880
+ some crazy AI, because there's no way a person found this on their own, that was kind of
+
+136
+00:17:21,880 --> 00:17:28,440
+ my feelings, and then like two or three days later, the person who discovered it actually
+
+137
+00:17:28,440 --> 00:17:33,400
+ more or less posted that exact same conclusion, like here's the research I did, and then here's
+
+138
+00:17:33,400 --> 00:17:36,360
+ how I used AI to find it.
+
+139
+00:17:36,360 --> 00:17:44,960
+ And it was this huge deep dive, he basically fired up GPT sole model, and just let it run
+
+140
+00:17:44,960 --> 00:17:50,880
+ in ultra mode, where it would just basically recursively keep trying, keep trying, keep
+
+141
+00:17:50,880 --> 00:17:56,200
+ trying, for as long as it would take for whatever goal they gave it.
+
+142
+00:17:56,200 --> 00:18:01,680
+ And they were directing it in a very cybersecurity way, like they were saying, direct it for
+
+143
+00:18:01,680 --> 00:18:11,360
+ this critical unauthorized findings, and string together and chain things, like they were
+
+144
+00:18:11,360 --> 00:18:16,720
+ telling it to look through all the low findings and see if you can chain together something
+
+145
+00:18:16,720 --> 00:18:18,800
+ to make it worse.
+
+146
+00:18:18,800 --> 00:18:26,640
+ So when that happened, I was like, kind of in awe of what what they were able to produce,
+
+147
+00:18:26,640 --> 00:18:33,120
+ but in the back of my mind, I'm thinking, you know what, this method is probably gonna
+
+148
+00:18:33,120 --> 00:18:39,040
+ uncover something equally as large on some of the big plugins.
+
+149
+00:18:39,040 --> 00:18:50,920
+ So I actually had my, I tried to reproduce the results directly, meaning I had purchased
+
+150
+00:18:50,920 --> 00:18:53,760
+ a subscription for what they were using.
+
+151
+00:18:53,760 --> 00:19:02,060
+ I had chat GPT sole model kind of study their research to see if they could reproduce it.
+
+152
+00:19:02,060 --> 00:19:09,960
+ And it kind of came up with a chaining sort of things.
+
+153
+00:19:09,960 --> 00:19:15,800
+ And I got really lucky the week I was trying this chat GPT was doing a weekly reset, which
+
+154
+00:19:15,800 --> 00:19:23,480
+ means I was ending up burning an entire week's worth of usage trying to find bugs like they
+
+155
+00:19:23,480 --> 00:19:24,480
+ did.
+
+156
+00:19:24,480 --> 00:19:27,000
+ And I would get hit a reset.
+
+157
+00:19:27,000 --> 00:19:31,800
+ And then I would the next day, again, burn an entire week in a single day, and then get
+
+158
+00:19:31,800 --> 00:19:32,880
+ hit with a reset.
+
+159
+00:19:32,880 --> 00:19:43,040
+ So within a week, I had used like the equivalent of three or four weeks of usage.
+
+160
+00:19:43,040 --> 00:19:44,560
+ And I wasn't finding anything.
+
+161
+00:19:44,560 --> 00:19:52,320
+ So I was just striking out, checking out a few days later, I kind of came back to the
+
+162
+00:19:52,320 --> 00:19:59,720
+ idea I'm like, maybe my problem is I just got to, I got to like up the ante, I'm searching
+
+163
+00:19:59,720 --> 00:20:04,720
+ too many plugins, not spending enough time on one.
+
+164
+00:20:04,720 --> 00:20:10,400
+ So at that point, my sole usage was up.
+
+165
+00:20:10,400 --> 00:20:15,920
+ This was the day before opus 5.0 came out.
+
+166
+00:20:15,920 --> 00:20:22,280
+ So I spun up OBS 4.8, and I picked two targets.
+
+167
+00:20:22,280 --> 00:20:32,560
+ And I just did a modified version of the chaining hunt, and kind of compounded it with do a
+
+168
+00:20:32,560 --> 00:20:39,280
+ deep dive hunts, run as long as you need to spin up as many sub agents as you need to,
+
+169
+00:20:39,280 --> 00:20:42,840
+ and look for security vulnerabilities.
+
+170
+00:20:42,840 --> 00:20:47,400
+ And it just went off and ran for a couple hours.
+
+171
+00:20:47,400 --> 00:20:52,100
+ And a few hours later, a big one came out.
+
+172
+00:20:52,100 --> 00:21:00,160
+ This was for the Elementor Pro, which is one of the largest WordPress plugins.
+
+173
+00:21:00,160 --> 00:21:05,000
+ It's used on 10 million websites.
+
+174
+00:21:05,000 --> 00:21:16,840
+ In terms of payout, the larger the find, the more they payout.
+
+175
+00:21:16,840 --> 00:21:22,680
+ And so it's all said and done, I submitted it, they accepted it.
+
+176
+00:21:22,680 --> 00:21:34,240
+ And at the end of, and on August 1st, there was $15,000 in my PayPal account for finding
+
+177
+00:21:34,240 --> 00:21:40,520
+ a critical vulnerability in Elementor Pro.
+
+178
+00:21:40,520 --> 00:22:00,920
+ While, it was right timing, and the right search parameters.
+
+179
+00:22:00,920 --> 00:22:03,120
+ Need to figure out a way to tie this up.
+
+180
+00:22:03,120 --> 00:22:12,560
+ Going back to the pipeline somehow, not sure.
+
+181
+00:22:12,560 --> 00:22:20,840
+ So going back to my premise, we are at our transition phase.
+
+182
+00:22:20,840 --> 00:22:33,840
+ The AI is getting to be really smart.
+
+183
+00:22:33,840 --> 00:22:44,680
+ So using AI, so we're at the point where AI is really good about finding bugs.
+
+184
+00:22:44,680 --> 00:22:54,080
+ Like everyone who is writing code, writing applications, should be using AI as part of
+
+185
+00:22:54,080 --> 00:22:55,240
+ the release cycle.
+
+186
+00:22:55,240 --> 00:22:57,640
+ So that's kind of how I treat it now.
+
+187
+00:22:57,640 --> 00:23:03,440
+ Like now that I've done these large, deep code audits, bringing it back home for my
+
+188
+00:23:03,440 --> 00:23:14,360
+ own stuff that I'm making, the main thing I want to take away is to run these code audits
+
+189
+00:23:14,360 --> 00:23:15,960
+ as part of the release cycle.
+
+190
+00:23:15,960 --> 00:23:21,320
+ So you're making something, you're adding new features, and if you're going to release
+
+191
+00:23:21,320 --> 00:23:27,800
+ version 1, before you release version 1, run it through a big code audit and fix whatever
+
+192
+00:23:27,800 --> 00:23:28,800
+ it finds.
+
+193
+00:23:28,800 --> 00:23:35,120
+ If you're going to release a 1.1, that's the time that you need to incorporate it into
+
+194
+00:23:35,120 --> 00:23:38,200
+ your flow.
+
+195
+00:23:38,200 --> 00:23:49,080
+ It's AI's ability to just exploit things is just insane.
+
+196
+00:23:49,080 --> 00:23:52,960
+ It is really good about finding the holes and exploiting things.
+
+197
+00:23:52,960 --> 00:24:00,200
+ So I don't think it's going away.
+
+198
+00:24:00,200 --> 00:24:04,320
+ It's not a once and done thing where we just use AI, find all the bugs, and fix all the
+
+199
+00:24:04,320 --> 00:24:07,120
+ things, and we're all good.
+
+200
+00:24:07,120 --> 00:24:12,200
+ Now we're still going to be writing code, even if AI's the one writing the code, and
+
+201
+00:24:12,200 --> 00:24:18,640
+ just because AI is writing the code and understands security vulnerability does not mean it has
+
+202
+00:24:18,640 --> 00:24:21,760
+ the complete picture, especially for larger code bases.
+
+203
+00:24:21,760 --> 00:24:27,520
+ So if you're building a project and it's got 10,000 lines of code, AI is still going to
+
+204
+00:24:27,520 --> 00:24:34,440
+ create vulnerabilities because it doesn't have all 10,000 lines in its context window when
+
+205
+00:24:34,440 --> 00:24:35,880
+ it's making the new feature.
+
+206
+00:24:35,880 --> 00:24:45,500
+ So every version needs a check before you release it is ideal.
+
+207
+00:24:45,500 --> 00:24:51,960
+ So if you don't do it, someone outside is probably going to do it if it's open source,
+
+208
+00:24:51,960 --> 00:24:59,880
+ or worse yet, someone's going to find an exploit in your software that you're not going to
+
+209
+00:24:59,880 --> 00:25:04,080
+ have any visibility on.
+
+210
+00:25:04,080 --> 00:25:09,480
+ And that's my talk, that's 25 minutes.
+
+211
+00:25:09,480 --> 00:25:19,040
+ Let's try to create slides based off of that content in a way that it makes sense.
+
+212
+00:25:19,040 --> 00:25:25,820
+ That way I'm not following the slides, but the slides can follow me better.
+
+213
+00:25:25,820 --> 00:25:30,840
+ And feel free to rearrange the order of how I've described things, but I think I hit the
+
+214
+00:25:30,840 --> 00:25:31,840
+ main points.
+
+215
+00:25:31,840 --> 00:25:39,760
+ I want to have the WordPress core security finding kind of be a cornerstone of my talk.
+
+216
+00:25:39,760 --> 00:25:47,000
+ I want to have the pipeline to fully describe like you use AI to prove AI.
+
+217
+00:25:47,000 --> 00:25:53,180
+ And then I'm not sure how to land it, but maybe land it with the description of if you're
+
+218
+00:25:53,180 --> 00:25:58,040
+ building things, you have to incorporate security audits and security fixes as part of your
+
+219
+00:25:58,040 --> 00:25:59,920
+ process.
+
+220
+00:25:59,920 --> 00:26:01,560
+ And I think that'll work.
+
