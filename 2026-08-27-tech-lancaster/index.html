@@ -29,6 +29,12 @@
   .present-bar button { appearance:none; border:0; border-radius:16px; padding:22px 12px; font:600 20px/1 'IBM Plex Sans',sans-serif; color:#0A1622; background:#EBF1F7; }
   .present-bar button.next { background:#E0A458; }
 
+  body.embed-mode .nav-hint,
+  body.embed-mode .slide-number,
+  body.embed-mode .present-bar,
+  body.embed-mode #notes { display:none !important; }
+  body.embed-mode .progress { height:2px; }
+
   #notes { position:fixed; left:0; right:0; bottom:0; max-height:38vh; overflow:auto; padding:22px 32px;
            background:rgba(7,16,26,.96); border-top:1px solid rgba(224,164,88,.3); color:#B9CAD8;
            font-family:'IBM Plex Sans',sans-serif; font-size:18px; line-height:1.5; z-index:60; display:none; }
@@ -428,7 +434,8 @@
     slideNumber.innerHTML = label ? label + '<span style="margin-left:1.8em;">' + pos + '</span>' : pos;
     notesLabel.textContent = (current + 1) + ' / ' + slides.length + (label ? ' · ' + label : '');
     notesBody.textContent = active.dataset.speakerNotes || '';
-    location.hash = current + 1;
+    const nextHash = '#' + (current + 1);
+    if (location.hash !== nextHash) history.replaceState(null, '', nextHash);
   }
 
   function go(n) {
@@ -450,6 +457,18 @@
 
   (function () {
     var params = new URLSearchParams(location.search);
+    if (params.get('embed') === '1') {
+      document.body.classList.add('embed-mode');
+      window.addEventListener('message', function (e) {
+        if (!e.data || e.data.type !== 'remote-present') return;
+        if (typeof e.data.index === 'number') go(e.data.index);
+      });
+      window.addEventListener('hashchange', function () {
+        var n = parseInt((location.hash || '').replace('#', ''), 10);
+        if (n) go(n - 1);
+      });
+      return;
+    }
     if (!params.get('present')) return;
     document.body.classList.add('present-mode');
     notesOn = true;
