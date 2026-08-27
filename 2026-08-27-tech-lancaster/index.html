@@ -23,6 +23,12 @@
   .slide-number { position:fixed; bottom:20px; right:28px; color:#4E6275; font-size:15px; font-family:'IBM Plex Mono',monospace; letter-spacing:.08em; z-index:50; }
   .nav-hint { position:fixed; bottom:20px; left:28px; color:#33485c; font-size:13px; font-family:'IBM Plex Mono',monospace; z-index:50; }
 
+  body.present-mode #notes { display:block; }
+  body.present-mode .present-bar { display:grid; }
+  .present-bar { display:none; position:fixed; left:16px; right:16px; bottom:16px; z-index:70; grid-template-columns:1fr 1.4fr; gap:12px; }
+  .present-bar button { appearance:none; border:0; border-radius:16px; padding:22px 12px; font:600 20px/1 'IBM Plex Sans',sans-serif; color:#0A1622; background:#EBF1F7; }
+  .present-bar button.next { background:#E0A458; }
+
   #notes { position:fixed; left:0; right:0; bottom:0; max-height:38vh; overflow:auto; padding:22px 32px;
            background:rgba(7,16,26,.96); border-top:1px solid rgba(224,164,88,.3); color:#B9CAD8;
            font-family:'IBM Plex Sans',sans-serif; font-size:18px; line-height:1.5; z-index:60; display:none; }
@@ -387,6 +393,10 @@
 </div>
 
 <div id="notes"><div class="label" id="notesLabel"></div><div id="notesBody"></div></div>
+<div class="present-bar" id="presentBar">
+  <button type="button" id="presentPrev">← Prev</button>
+  <button type="button" class="next" id="presentNext">Next →</button>
+</div>
 
 <script>
   const slides = Array.from(document.querySelectorAll('.slide'));
@@ -421,7 +431,32 @@
     location.hash = current + 1;
   }
 
-  function go(n) { current = Math.max(0, Math.min(slides.length - 1, n)); render(); }
+  function go(n) {
+    current = Math.max(0, Math.min(slides.length - 1, n));
+    render();
+    if (window.Deck && typeof window.Deck.onChange === 'function') window.Deck.onChange(current);
+  }
+
+  window.Deck = {
+    room: '2026-08-27-tech-lancaster',
+    getIndex: function () { return current; },
+    setIndex: function (n) { go(n); },
+    getCatalog: function () {
+      return slides.map(function (s) {
+        return { label: s.dataset.screenLabel || '', notes: s.dataset.speakerNotes || '' };
+      });
+    }
+  };
+
+  (function () {
+    var params = new URLSearchParams(location.search);
+    if (!params.get('present')) return;
+    document.body.classList.add('present-mode');
+    notesOn = true;
+    notes.classList.add('show');
+    document.getElementById('presentPrev').addEventListener('click', function () { go(current - 1); });
+    document.getElementById('presentNext').addEventListener('click', function () { go(current + 1); });
+  })();
 
   function fit() {
     const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
@@ -447,5 +482,6 @@
   fit();
   render();
 </script>
+<script src="https://remote-present.captaincore.io/client.js" data-room="2026-08-27-tech-lancaster"></script>
 </body>
 </html>
